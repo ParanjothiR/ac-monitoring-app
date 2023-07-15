@@ -14,7 +14,7 @@ cons.on('open',()=>{
 
  
 app.post('/api/sensordata',(req,res)=>{
-    const {humidity,temperature,waterLevelPercentage,acState,acno,deviceid}=req.body
+    const {temperature,waterLevelPercentage,acState,acno,deviceid}=req.body
     if(deviceid=="#1A6B9C"){
         console.log(req.body)
     }
