@@ -11,12 +11,19 @@ const cons=mongoose.connection
 cons.on('open',()=>{
      console.log("connect...")
 })
-
+const dbstore=require("./Model/sensorvalue")
 app.use(express.json())
-app.post('/api/sensordata',(req, res)=> {
+app.post('/api/sensordata',async(req, res)=> {
         const { temperature, waterLevelPercentage, acState, acno, deviceid } = req.body;
-        if (deviceid == "#1A6B9C") {
+        if (deviceid === "#1A6B9C") {
             console.log(req.body);
+            try {
+                const dataToSave = await dbstore.save();
+                res.status(200).json({ "success":true, "error":null, "id":dataToSave._id})
+            }
+            catch (error) {
+                res.status(500).json({ "success":false, "error": error.message})
+            } 
         }
         res.status(500).json({ message: "get the post sucessfully" });
     })
