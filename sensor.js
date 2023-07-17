@@ -12,14 +12,14 @@ cons.on('open',()=>{
      console.log("connect...")
 })
 
- 
-app.post('/api/sensordata',(req,res)=>{
-    const {temperature,waterLevelPercentage,acState,acno,deviceid}=req.body
-    if(deviceid=="#1A6B9C"){
-        console.log(req.body)
-    }
-    res.status(500).json({message:"get the post sucessfully"})
-})
+app.use(express.json())
+app.post('/api/sensordata',(req, res)=> {
+        const { temperature, waterLevelPercentage, acState, acno, deviceid } = req.body;
+        if (deviceid == "#1A6B9C") {
+            console.log(req.body);
+        }
+        res.status(500).json({ message: "get the post sucessfully" });
+    })
 app.listen(port,()=>{
     console.log(`Server is running ${port}`)
 })
