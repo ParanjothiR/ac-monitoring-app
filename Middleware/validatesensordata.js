@@ -1,96 +1,99 @@
 //const validateToken = require("./validateToken");
+
+require('dotenv').config();
+
 const nodemailer = require('nodemailer');
 const dbstore = require("../Model/sensorvalue");
-const dbstore1=require("../Model/uservalues")
-let timecalc=0;
-let messagetime=0;
-let watertime1=0;
-let watertime2=0
-let emailContent=""
-async function validatesensordata(req,data) {
+const dbstore1 = require("../Model/uservalues")
+let timecalc = 0;
+let messagetime = 0;
+let watertime1 = 0;
+let watertime2 = 0
+let emailContent = ""
+async function validatesensordata(req, data) {
     const deviceId = req.deviceid;
-    const userdb = await dbstore1.findOne({deviceId})
+    const userdb = await dbstore1.findOne({ deviceId })
     console.log(userdb)
     const userEmail = userdb.email
     console.log(userEmail)
-    
-    // message(userEmail, "hello world");
-    
+
+
+
     try {
         // Fetch the last three sensor data records for the given device ID
         // Limit to the last three records
-       
-        if(data.acState==='ac on'){
-            let water=parseFloat(data.waterLevelPercentage)
+
+        if (data.acState === 'ac on') {
+            let water = parseFloat(data.waterLevelPercentage)
             console.log(water)
-           
-            if(watertime1==0){
-               if(water>=40.0 && water<=50.0){
-                  watertime1=1
-                  console.log("water")
-                emailContent="your air conditioner tray water level is increase you servicing in your air conditioner"
-                  message(userEmail, emailContent)
-              }
-           }
-           if(watertime2==0){
-            if(water>50.0){
-                watertime2=1
-                emailContent="your air conditioner tray water level is increase you are suddenly checking and servicing in your air conditioner"
-                message(userEmail, emailContent)
-           }
-        }
 
-     timecalc+=2;
-    if(timecalc>=10){    
-        const sensorData = await dbstore.find({
-            deviceid: deviceId,
-            acState: "ac on",
-          })
-          .sort({ timestamp: -1 }) // Sort in descending order of timestamp
-          .limit(3);
-          // Limit to the last three records
-          //console.log(sensorData)
-        let count=1;
-        let acnumber=parseInt(data.acno);
-        let temperature=parseFloat(data.temperature);
-        let alert=0;
-        for (const data of sensorData) {
-            //emailContent += `Timestamp: ${data.timestamp}, temperatureValue: ${data.temperature},Acstatus:${data.acState},Acno:${data.acno}\n`;
+            if (watertime1 == 0) {
+                if (water >= 40.0 && water <= 50.0) {
+                    watertime1 = 1
+                    console.log("water")
+                    emailContent = "your air conditioner tray water level is increase you servicing in your air conditioner"
+                    message(userEmail, emailContent)
+                }
+            }
+            if (watertime2 == 0) {
+                if (water > 50.0) {
+                    watertime2 = 1
+                    emailContent = "your air conditioner tray water level is increase you are suddenly checking and servicing in your air conditioner"
+                    message(userEmail, emailContent)
+                }
+            }
 
-               if(temperature>27.00){
-                    alert=1;
-                    count++;
-               } 
+            timecalc += 2;
+            if (timecalc >= 10) {
+                const sensorData = await dbstore.find({
+                    deviceid: deviceId,
+                    acState: "ac on",
+                })
+                    .sort({ timestamp: -1 }) // Sort in descending order of timestamp
+                    .limit(3);
+                // Limit to the last three records
+                //console.log(sensorData)
+                let count = 1;
+                let acnumber = parseInt(data.acno);
+                let temperature = parseFloat(data.temperature);
+                let alert = 0;
+                for (const data of sensorData) {
+                    //emailContent += `Timestamp: ${data.timestamp}, temperatureValue: ${data.temperature},Acstatus:${data.acState},Acno:${data.acno}\n`;
+
+                    if (temperature > 27.00) {
+                        alert = 1;
+                        count++;
+                    }
+                }
+                console.log(alert)
+                console.log(count)
+                if (alert == 1 && count == 4) {
+                    messagetime += 2;
+                    // Create a Nodemailer transporter
+                    if (messagetime === 2) {
+                        emailContent = `your air conditioner On ${acnumber} sensor/But your air conditioner is not giving the cooling  ${temperature}`
+                        message(userEmail, emailContent)
+                        alert = 0;
+                        // // Call the sendEmail function and pass the transporter as an argument
+
+                    } else if (messagetime === 180) {
+                        messagetime = 0;
+                    }
+                }
+
+            }
+        } else {
+            timecalc = 0;
+            messagetime = 0;
+            watertime1 = 0;
+            watertime2 = 0
+            console.log("Ac is off")
         }
-        console.log(alert)
-        console.log(count)
-        if(alert==1 && count==4){
-           messagetime+=2;
-        // Create a Nodemailer transporter
-        if(messagetime===2){
-         emailContent=`your air conditioner On ${acnumber} sensor/But your air conditioner is not giving the cooling  ${temperature}`
-         message(userEmail, emailContent)
-         alert=0;
-        // // Call the sendEmail function and pass the transporter as an argument
-       
-        }else if(messagetime===180){
-            messagetime=0;
-        }
-        }
- 
-     }
-    }else{
-    timecalc=0;
-    messagetime=0;
-    watertime1=0;
-    watertime2=0
-        console.log("Ac is off")
-    }
     } catch (error) {
         console.error('Error retrieving and sending data:', error);
     }
 }
-async function  message(userEmail,emailContent){
+async function message(userEmail, emailContent) {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -112,9 +115,10 @@ async function sendEmail(recipientEmail, subject, content, transporter) {
         text: content                 // Plain text content of the email
         // You can also use 'html' key to send HTML content instead of plain text
     };
-    
+
     try {
         console.log("entry1")
+        // const info = 
         new Promise((resolve, reject) => {
             transporter.sendMail(mailOptions, function (error, response) {
                 if (error) {
@@ -124,6 +128,8 @@ async function sendEmail(recipientEmail, subject, content, transporter) {
                 }
             });
         }).then(res => console.log(res));
+
+        // console.log('Email sent:', info.response);
     } catch (error) {
         console.error('Error sending email:', error);
     }
