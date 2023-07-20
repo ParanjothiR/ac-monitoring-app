@@ -20,6 +20,10 @@ const Schemadata= new mongoose.Schema({
     deviceid:{
         required:true,
         type:String
+    },
+    timestamp:{
+        required:true,
+        type:String
     }
 })
 module.exports = mongoose.model('sensorvalue',Schemadata);

@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 require('dotenv').config();
 const mongoose = require("mongoose");
-const dbstore = require("./Model/sensorvalue");
-
+//const dbstore = require("./Model/sensorvalue");
 const url = process.env.URL;
 const port = process.env.PORT;
 
@@ -14,27 +13,11 @@ cons.on('open', () => {
 });
 
 app.use(express.json());
-app.post('/api/sensordata', async (req, res) => {
-    const { temperature, waterLevelPercentage, acState, acno, deviceid } = req.body;
-    if (deviceid === "#1A6B9C") {
-        console.log(req.body);
-        try {
-            const newSensorData = new dbstore({
-                temperature,
-                waterLevelPercentage,
-                acState,
-                acno,
-                deviceid
-            });
-            const dataToSave = await newSensorData.save();
-            console.log("success");
-        } catch (error) {
-            console.error(error);
-        }
-    }
+app.use("/api/sensordata",require("./Router/sensorroutes"))
+app.use("/api/users",require("./Router/userrouter"))
 
-    res.status(200).json({ message: "get the post successfully" });
-});
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
