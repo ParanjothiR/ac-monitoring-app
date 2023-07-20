@@ -27,6 +27,7 @@ async function validatesensordata(req,data) {
             if(watertime1==0){
                if(water>=40.0 && water<=50.0){
                   watertime1=1
+                  console.log("water")
                 emailContent="your air conditioner tray water level is increase you servicing in your air conditioner"
                   message(userEmail,)
               }
@@ -101,6 +102,7 @@ async function  message(userEmail){
 }
 
 async function sendEmail(recipientEmail, subject, content, transporter) {
+    console.log("enter")
     const mailOptions = {
         from: '2012103@nec.edu.in', // Replace with your sender email address
         to: recipientEmail,           // Recipient email address
