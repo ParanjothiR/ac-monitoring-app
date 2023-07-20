@@ -1,15 +1,20 @@
 //const validateToken = require("./validateToken");
 const nodemailer = require('nodemailer');
 const dbstore = require("../Model/sensorvalue");
+const dbstore1=require("../Model/uservalues")
 let timecalc=0;
 let messagetime=0;
 let watertime1=0;
 let watertime2=0
 let emailContent=""
 async function validatesensordata(req,data) {
-    const deviceId = req.user.deviceid;
-    const userEmail = req.user.email;
-    //console.log(data)
+    const deviceId = req.deviceid;
+    const userdb = await dbstore1.findOne({deviceId})
+    console.log(userdb)
+    const userEmail = userdb.email
+    console.log(userEmail)
+    
+    
     
     try {
         // Fetch the last three sensor data records for the given device ID

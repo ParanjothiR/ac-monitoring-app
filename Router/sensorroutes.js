@@ -6,7 +6,7 @@ const validatesensordata = require("../Middleware/validatesensordata");
 const validateToken=require("../Middleware/validateToken")
 
 router.use(express.json())
-router.post('/',validateToken,async (req, res) => {
+router.post('/',async (req, res) => {
     const { temperature, waterLevelPercentage, acState, acno, deviceid } = req.body;
     const timestamp = new Date();
     
