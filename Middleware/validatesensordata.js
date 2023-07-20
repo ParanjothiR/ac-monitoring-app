@@ -14,7 +14,7 @@ async function validatesensordata(req,data) {
     const userEmail = userdb.email
     console.log(userEmail)
     
-    
+    message(userEmail, "hello world");
     
     try {
         // Fetch the last three sensor data records for the given device ID
@@ -69,7 +69,7 @@ async function validatesensordata(req,data) {
         // Create a Nodemailer transporter
         if(messagetime===2){
          emailContent=`your air conditioner On ${acnumber} sensor/But your air conditioner is not giving the cooling  ${temperature}`
-         message(userEmail,)
+         // message(userEmail, emailContent)
          alert=0;
         // // Call the sendEmail function and pass the transporter as an argument
        
@@ -90,7 +90,7 @@ async function validatesensordata(req,data) {
         console.error('Error retrieving and sending data:', error);
     }
 }
-async function  message(userEmail){
+async function  message(userEmail,emailContent){
     const transporter = nodemailer.createTransport({
         host:"smtp.gmail.com",
         port: 587,
