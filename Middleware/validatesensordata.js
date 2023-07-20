@@ -29,14 +29,14 @@ async function validatesensordata(req,data) {
                   watertime1=1
                   console.log("water")
                 emailContent="your air conditioner tray water level is increase you servicing in your air conditioner"
-                  message(userEmail,)
+                  message(userEmail, emailContent)
               }
            }
            if(watertime2==0){
             if(water>50.0){
                 watertime2=1
                 emailContent="your air conditioner tray water level is increase you are suddenly checking and servicing in your air conditioner"
-                message(userEmail,)
+                message(userEmail, emailContent)
            }
         }
 
@@ -69,7 +69,7 @@ async function validatesensordata(req,data) {
         // Create a Nodemailer transporter
         if(messagetime===2){
          emailContent=`your air conditioner On ${acnumber} sensor/But your air conditioner is not giving the cooling  ${temperature}`
-         // message(userEmail, emailContent)
+         message(userEmail, emailContent)
          alert=0;
         // // Call the sendEmail function and pass the transporter as an argument
        
@@ -92,9 +92,9 @@ async function validatesensordata(req,data) {
 }
 async function  message(userEmail,emailContent){
     const transporter = nodemailer.createTransport({
-        host:"smtp.gmail.com",
-        port: 587,
-        secure: false,
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
         auth: {
             user: '2012103@nec.edu.in', // Replace with your email address
             pass: process.env.MAIL_PASSWORD   // Replace with your email password or app password
