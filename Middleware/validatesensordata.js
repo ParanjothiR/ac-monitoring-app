@@ -97,7 +97,7 @@ async function  message(userEmail){
         secure: false,
         auth: {
             user: '2012103@nec.edu.in', // Replace with your email address
-            pass: 'Paranjothi@123'   // Replace with your email password or app password
+            pass: process.env.MAIL_PASSWORD   // Replace with your email password or app password
         }
     });
     sendEmail(userEmail, 'Ac monitoring in water and air conditioner cooling', emailContent, transporter);
