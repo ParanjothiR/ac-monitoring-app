@@ -92,7 +92,9 @@ async function validatesensordata(req,data) {
 }
 async function  message(userEmail){
     const transporter = nodemailer.createTransport({
-        service: 'Gmail',
+        host:"smtp.gmail.com",
+        port: 587,
+        secure: false,
         auth: {
             user: '2012103@nec.edu.in', // Replace with your email address
             pass: 'Paranjothi@123'   // Replace with your email password or app password
