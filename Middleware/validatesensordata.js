@@ -120,7 +120,7 @@ async function sendEmail(recipientEmail, subject, content, transporter) {
                 if (error) {
                     reject(error)
                 } else {
-                    resolve(JSON.stringify({"email sent", response}))
+                    resolve(JSON.stringify({"message":"email sent", response}))
                 }
             });
         }).then(res => console.log(res));
