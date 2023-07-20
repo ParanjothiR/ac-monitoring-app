@@ -17,7 +17,7 @@ async function validatesensordata(req, data) {
     const userEmail = userdb.email
     console.log(userEmail)
 
-     message(userEmail, emailContent)
+     message(userEmail, 'hello testing')
 
     try {
         // Fetch the last three sensor data records for the given device ID
