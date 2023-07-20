@@ -120,6 +120,7 @@ async function sendEmail(recipientEmail, subject, content, transporter) {
         console.log("entry1")
         // const info = 
         new Promise((resolve, reject) => {
+            console.log("entry1");
             transporter.sendMail(mailOptions, function (error, response) {
                 if (error) {
                     reject(error)
