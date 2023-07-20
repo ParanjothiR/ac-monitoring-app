@@ -110,8 +110,9 @@ async function sendEmail(recipientEmail, subject, content, transporter) {
         text: content                 // Plain text content of the email
         // You can also use 'html' key to send HTML content instead of plain text
     };
-
+    
     try {
+        console.log("entry1")
         const info = await transporter.sendMail(mailOptions);
         console.log('Email sent:', info.response);
     } catch (error) {
