@@ -23,7 +23,7 @@ async function validatesensordata(req, data) {
         // Fetch the last three sensor data records for the given device ID
         // Limit to the last three records
 
-        if (data.acState === 'ac on') {
+        if (data.acState === 'AC ON') {
             let water = parseFloat(data.waterLevelPercentage)
             console.log(water)
 
@@ -47,7 +47,7 @@ async function validatesensordata(req, data) {
             if (timecalc >= 10) {
                 const sensorData = await dbstore.find({
                     deviceid: deviceId,
-                    acState: "ac on",
+                    acState: "AC ON",
                 })
                     .sort({ timestamp: -1 }) // Sort in descending order of timestamp
                     .limit(3);
