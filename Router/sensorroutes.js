@@ -7,12 +7,7 @@ const validateToken=require("../Middleware/validateToken")
 
 router.use(express.json())
 
-router.get('/get',async(req,res)=>{
-    //dbstore.deleteMany({ deviceid: req.deviceid })
-    const s=dbstore.find()
-    console.log(s)
-    res.send("hii")
-})
+
 router.post('/',async (req, res) => {
     const { temperature, waterLevelPercentage, acState, acno, deviceid } = req.body;
     const timestamp = new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'});
