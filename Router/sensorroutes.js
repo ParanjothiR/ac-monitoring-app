@@ -15,7 +15,7 @@ router.post('/',async (req, res) => {
     if (deviceid === "#1A6B9C"){
         // console.log(req.body);
         try {
-            const newSensorData = new dbstore({
+            const newSensorData = await new dbstore({
                 temperature,
                 waterLevelPercentage,
                 acState,
