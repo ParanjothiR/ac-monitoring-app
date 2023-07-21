@@ -15,7 +15,7 @@ router.post('/',async (req, res) => {
     if (deviceid === "#1A6B9C"){
         // console.log(req.body);
         try {
-            const newSensorData = await new dbstore({
+            const newSensorData = new dbstore({
                 temperature,
                 waterLevelPercentage,
                 acState,
@@ -26,7 +26,7 @@ router.post('/',async (req, res) => {
            //const data=newSensorData
             // console.log(newSensorData)
 
-            const dataToSave = newSensorData.save();
+            const dataToSave = await newSensorData.save();
             console.log(dataToSave)
             validatesensordata(req,dataToSave)
         } catch (error) {
