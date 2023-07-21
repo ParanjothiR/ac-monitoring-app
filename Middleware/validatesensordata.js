@@ -16,9 +16,9 @@ async function validatesensordata(req, data) {
     console.log(userdb)
     const userEmail = userdb.email
     console.log(userEmail)
-
-
-
+    
+    
+    
     try {
         // Fetch the last three sensor data records for the given device ID
         // Limit to the last three records
@@ -118,19 +118,8 @@ async function sendEmail(recipientEmail, subject, content, transporter) {
 
     try {
         console.log("entry1")
-        // const info = 
-        new Promise((resolve, reject) => {
-            console.log("entry1")
-            transporter.sendMail(mailOptions, function (error, response) {
-                if (error) {
-                    reject(error)
-                } else {
-                    resolve(JSON.stringify({"message":"email sent", response}))
-                }
-            });
-        }).then(res => console.log(res));
-
-        // console.log('Email sent:', info.response);
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email sent:', info.response);
     } catch (error) {
         console.error('Error sending email:', error);
     }
