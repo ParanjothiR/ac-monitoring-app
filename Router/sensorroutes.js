@@ -25,6 +25,7 @@ router.post('/',async (req, res) => {
             // console.log(newSensorData)
 
             const dataToSave = await newSensorData.save();
+            console.log(dataToSave)
             validatesensordata(req,dataToSave)
         } catch (error) {
             console.error(error);
