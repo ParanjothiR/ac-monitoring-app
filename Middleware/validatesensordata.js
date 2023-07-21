@@ -52,7 +52,7 @@ async function validatesensordata(req, data) {
                     .sort({ timestamp: -1 }) // Sort in descending order of timestamp
                     .limit(3);
                 // Limit to the last three records
-                //console.log(sensorData)
+                console.log(sensorData)
                 let count = 1;
                 let acnumber = parseInt(data.acno);
                 let temperature = parseFloat(data.temperature);
