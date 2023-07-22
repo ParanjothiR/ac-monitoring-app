@@ -10,19 +10,12 @@ let messagetime = 0;
 let watertime1 = 0;
 let watertime2 = 0
 let emailContent = ""
-async function validatesensordata(req, data) {
-    const deviceId = req.deviceid;
-    const userdb = await dbstore1.findOne({ deviceId })
-    console.log(userdb)
-    const userEmail = userdb.email
-    console.log(userEmail)
-    const m=await db.find({deviceid:deviceId}).sort({timestamp:-1}).limit(1)
-    console.log(m)
-    
+async function validatesensordata(data) {
+ 
+ 
     try {
-        // Fetch the last three sensor data records for the given device ID
-        // Limit to the last three records
 
+      
         if (data.acState === 'AC ON') {
             let water = parseFloat(data.waterLevelPercentage)
             console.log(water)
@@ -32,6 +25,9 @@ async function validatesensordata(req, data) {
                     watertime1 = 1
                     console.log("water")
                     emailContent = "your air conditioner tray water level is increase you servicing in your air conditioner"
+                    const userdb = await dbstore1.findOne({deviceid:data.deviceid})
+                    const userEmail = userdb.email
+                    console.log(userEmail)
                     message(userEmail, emailContent)
                 }
             }
@@ -39,6 +35,9 @@ async function validatesensordata(req, data) {
                 if (water > 50.0) {
                     watertime2 = 1
                     emailContent = "your air conditioner tray water level is increase you are suddenly checking and servicing in your air conditioner"
+                    const userdb = await dbstore1.findOne({deviceid:data.deviceid})
+                    const userEmail = userdb.email
+                    console.log(userEmail)
                     message(userEmail, emailContent)
                 }
             }
@@ -47,8 +46,7 @@ async function validatesensordata(req, data) {
             console.log(timecalc)
             if (timecalc >= 10) {
                 const sensorData = await db.find({
-                    deviceid: deviceId,
-                
+                    deviceid:data.deviceid
                 })
                     .sort({ _id: -1 }) // Sort in descending order of timestamp
                     .limit(5);
@@ -74,7 +72,11 @@ async function validatesensordata(req, data) {
                     messagetime += 2;
                     // Create a Nodemailer transporter
                     if (messagetime === 2) {
+                        
                         emailContent = `your air conditioner On ${acnumber} sensor/But your air conditioner is not giving the cooling  ${temperature}`
+                        const userdb = await dbstore1.findOne({deviceid:data.deviceid})
+                        const userEmail = userdb.email
+                        console.log(userEmail)
                         message(userEmail, emailContent)
                         alert = 0;
                         // // Call the sendEmail function and pass the transporter as an argument
