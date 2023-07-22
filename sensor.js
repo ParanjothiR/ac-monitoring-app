@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 //app.use(express.json());
 app.use("/api/sensordata",require("./Router/sensorroutes"))
 app.use("/api/users",require("./Router/userrouter"))
+app.use("/api/dashboard",require("./Router/dashboard"))
+app.use("/api/graph",require("./Router/graph"))
 
 
 
