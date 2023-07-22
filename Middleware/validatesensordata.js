@@ -18,7 +18,6 @@ async function validatesensordata(req, data) {
     console.log(userEmail)
     
     
-    
     try {
         // Fetch the last three sensor data records for the given device ID
         // Limit to the last three records
@@ -63,6 +62,7 @@ async function validatesensordata(req, data) {
                     if (temperature > 27.00) {
                         alert = 1;
                         count++;
+                        console.log(count)
                     }
                 }
                 console.log(alert)
@@ -95,11 +95,12 @@ async function validatesensordata(req, data) {
 }
 async function message(userEmail, emailContent) {
     const transporter = nodemailer.createTransport({
+        service:"gmail",
         host: "smtp.gmail.com",
-        port: 465,
+        port: 587,
         secure: true,
         auth: {
-            user: '2012103@nec.edu.in', // Replace with your email address
+            user: process.env.Email, // Replace with your email address
             pass: process.env.MAIL_PASSWORD   // Replace with your email password or app password
         }
     });
@@ -109,7 +110,7 @@ async function message(userEmail, emailContent) {
 async function sendEmail(recipientEmail, subject, content, transporter) {
     console.log("enter")
     const mailOptions = {
-        from: '2012103@nec.edu.in', // Replace with your sender email address
+        from: process.env.Email, // Replace with your sender email address
         to: recipientEmail,           // Recipient email address
         subject: subject,             // Email subject
         text: content                 // Plain text content of the email
