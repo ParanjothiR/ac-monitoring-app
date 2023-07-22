@@ -85,12 +85,13 @@ async function message(userEmail, emailContent) {
     const transporter = nodemailer.createTransport({
         service:"gmail",
         host: "smtp.gmail.com",
-        port: 587,
+        port: 25,
         secure: false,
         auth: {
             user: process.env.EMAIL, // Replace with your email address
             pass: process.env.MAIL_PASSWORD   // Replace with your email password or app password
-        }
+        },
+        tls: {rejectUnauthorized: false}
     });
     sendEmail(userEmail, 'Ac monitoring in water and air conditioner cooling', emailContent, transporter);
 }
