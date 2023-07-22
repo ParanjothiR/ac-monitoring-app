@@ -8,82 +8,66 @@ const dbstore1 = require("../Model/uservalues")
 let timecalc = 0;
 let messagetime = 0;
 let watertime1 = 0;
-let watertime2 = 0
 let emailContent = ""
 async function validatesensordata(data) {
- 
- 
     try {
-
-      
         if (data.acState === 'AC ON') {
             let water = parseFloat(data.waterLevelPercentage)
             console.log(water)
-
             if (watertime1 == 0) {
                 if (water >= 40.0 && water <= 50.0) {
                     watertime1 = 1
-                    console.log("water")
+                    //console.log("water")
                     emailContent = "your air conditioner tray water level is increase you servicing in your air conditioner"
                     const userdb = await dbstore1.findOne({deviceid:data.deviceid})
                     const userEmail = userdb.email
-                    console.log(userEmail)
                     message(userEmail, emailContent)
-                }
-            }
-            if (watertime2 == 0) {
-                if (water > 50.0) {
-                    watertime2 = 1
+                }else if(water > 50.0){
+                    watertime1 = 1
                     emailContent = "your air conditioner tray water level is increase you are suddenly checking and servicing in your air conditioner"
                     const userdb = await dbstore1.findOne({deviceid:data.deviceid})
                     const userEmail = userdb.email
-                    console.log(userEmail)
+                    //console.log(userEmail)
                     message(userEmail, emailContent)
                 }
-            }
 
-            timecalc += 2;
+            }
+            timecalc += 1;
             console.log(timecalc)
-            if (timecalc >= 10) {
+            if (timecalc >= 5 && messagetime==0) {
+
                 const sensorData = await db.find({
                     deviceid:data.deviceid
-                })
-                    .sort({ _id: -1 }) // Sort in descending order of timestamp
+                }) .sort({ _id: -1 }) 
                     .limit(5);
-                // Limit to the last three records
-                console.log(sensorData)
-                let count = 1;
+                //console.log(sensorData)
+                let count = 0;
                 let acnumber = parseInt(data.acno);
-                let temperature1 = parseFloat(data.temperature);
-                console.log(temperature1)
+                let temperature1
+               // console.log(temperature1)
                 let alert = 0;
                 for (const gdata of sensorData) {
-                    //emailContent += `Timestamp: ${data.timestamp}, temperatureValue: ${data.temperature},Acstatus:${data.acState},Acno:${data.acno}\n`;
-
-                    if (temperature1 > 30.0 && gdata.temperature>30.0) {
-                        alert = 1;
-                        count++;
-                        console.log(count)
+                    
+                    if (count==0) {
+                        temperature1=gdata.temperature
+                        count++
+                    }else{
+                        if(!(temperature1<gdata.temperature) || (temperature1>25.0)){
+                              temperature1=gdata.temperature
+                              count++
+                              alert++
+                        }
                     }
                 }
-                console.log(alert)
-                console.log(count)
-                if (alert == 1 && count == 4) {
-                    messagetime += 2;
-                    // Create a Nodemailer transporter
-                    if (messagetime === 2) {
-                        
-                        emailContent = `your air conditioner On ${acnumber} sensor/But your air conditioner is not giving the cooling  ${temperature}`
+                messagetime=1;
+                 
+                if(count==5){
+    
+                        emailContent = `your air conditioner ON ${acnumber} sensor But your air conditioner is not giving the cooling  ${temperature1}`
                         const userdb = await dbstore1.findOne({deviceid:data.deviceid})
                         const userEmail = userdb.email
                         console.log(userEmail)
                         message(userEmail, emailContent)
-                        alert = 0;
-                        // // Call the sendEmail function and pass the transporter as an argument
-
-                    } else if (messagetime === 180) {
-                        messagetime = 0;
-                    }
                 }
 
             }
@@ -91,7 +75,6 @@ async function validatesensordata(data) {
             timecalc = 0;
             messagetime = 0;
             watertime1 = 0;
-            watertime2 = 0
             console.log("Ac is off")
         }
     } catch (error) {
