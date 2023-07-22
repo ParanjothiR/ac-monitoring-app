@@ -85,7 +85,7 @@ async function message(userEmail, emailContent) {
     const transporter = nodemailer.createTransport({
         service:"gmail",
         host: "smtp.gmail.com",
-        port: 25,
+        port: 587,
         secure: false,
         auth: {
             user: process.env.EMAIL, // Replace with your email address
