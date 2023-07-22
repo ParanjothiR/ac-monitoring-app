@@ -3,7 +3,7 @@ const express=require("express")
 const router=express.Router()
 const dbstore = require("../Model/sensorvalue");
 const validatesensordata = require("../Middleware/validatesensordata");
-const validateToken=require("../Middleware/validateToken")
+//const validateToken=require("../Middleware/validateToken")
 
 router.use(express.json())
 
@@ -11,8 +11,6 @@ router.use(express.json())
 router.post('/',async (req, res) => {
     const { temperature, waterLevelPercentage, acState, acno, deviceid } = req.body;
     const timestamp = new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'});
-    
-    if (deviceid === "#1A6B9C"){
         // console.log(req.body);
         try {
             const newSensorData = new dbstore({
@@ -32,7 +30,7 @@ router.post('/',async (req, res) => {
         } catch (error) {
             console.error(error);
         }
-    }
+    
     //validatesensordata(newSensorData)
     res.status(200).json({ message: "get the post successfully" });
 });

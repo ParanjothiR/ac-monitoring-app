@@ -3,7 +3,7 @@
 require('dotenv').config();
 
 const nodemailer = require('nodemailer');
-const dbstore = require("../Model/sensorvalue");
+const db = require("../Model/sensorvalue")
 const dbstore1 = require("../Model/uservalues")
 let timecalc = 0;
 let messagetime = 0;
@@ -16,7 +16,8 @@ async function validatesensordata(req, data) {
     console.log(userdb)
     const userEmail = userdb.email
     console.log(userEmail)
-    
+    const m=await db.find({deviceid:deviceId}).sort({timestamp:-1}).limit(1)
+    console.log(m)
     
     try {
         // Fetch the last three sensor data records for the given device ID
@@ -43,8 +44,9 @@ async function validatesensordata(req, data) {
             }
 
             timecalc += 2;
+            console.log(timecalc)
             if (timecalc >= 10) {
-                const sensorData = await dbstore.find({
+                const sensorData = await db.find({
                     deviceid: deviceId,
                     acState: "AC ON",
                 })
@@ -54,12 +56,13 @@ async function validatesensordata(req, data) {
                 console.log(sensorData)
                 let count = 1;
                 let acnumber = parseInt(data.acno);
-                let temperature = parseFloat(data.temperature);
+                let temperature1 = parseFloat(data.temperature);
+                console.log(temperature1)
                 let alert = 0;
-                for (const data of sensorData) {
+                for (const gdata of sensorData) {
                     //emailContent += `Timestamp: ${data.timestamp}, temperatureValue: ${data.temperature},Acstatus:${data.acState},Acno:${data.acno}\n`;
 
-                    if (temperature > 27.00) {
+                    if (temperature1 > 30.0 && gdata.temperature>30.0) {
                         alert = 1;
                         count++;
                         console.log(count)
