@@ -4,8 +4,6 @@ const dbstore = require("../Model/sensorvalue");
 const validatesensordata = require("../Middleware/validatesensordata");
 const validateToken=require("../Middleware/validateToken")
 
-
-
 router.get('/',validateToken,async(req,res)=>{
     console.log(req.user.deviceid)
     

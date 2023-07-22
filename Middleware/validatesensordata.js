@@ -48,10 +48,10 @@ async function validatesensordata(req, data) {
             if (timecalc >= 10) {
                 const sensorData = await db.find({
                     deviceid: deviceId,
-                    acState: "AC ON",
+                
                 })
-                    .sort({ timestamp: -1 }) // Sort in descending order of timestamp
-                    .limit(3);
+                    .sort({ _id: -1 }) // Sort in descending order of timestamp
+                    .limit(5);
                 // Limit to the last three records
                 console.log(sensorData)
                 let count = 1;
