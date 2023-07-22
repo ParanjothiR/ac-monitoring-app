@@ -85,10 +85,10 @@ async function message(userEmail, emailContent) {
     const transporter = nodemailer.createTransport({
         service:"gmail",
         host: "smtp.gmail.com",
-        port: 587,
+        port: 465,
         secure: true,
         auth: {
-            user: process.env.Email, // Replace with your email address
+            user: process.env.EMAIL, // Replace with your email address
             pass: process.env.MAIL_PASSWORD   // Replace with your email password or app password
         }
     });
@@ -98,7 +98,7 @@ async function message(userEmail, emailContent) {
 async function sendEmail(recipientEmail, subject, content, transporter) {
     console.log("enter")
     const mailOptions = {
-        from: process.env.Email, // Replace with your sender email address
+        from: process.env.EMAIL, // Replace with your sender email address
         to: recipientEmail,           // Recipient email address
         subject: subject,             // Email subject
         text: content                 // Plain text content of the email
