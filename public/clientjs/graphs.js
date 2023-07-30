@@ -233,7 +233,7 @@ sr.reveal(`.footer, footer__container`, {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
+let graphrender=()=>{
   
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
@@ -272,7 +272,9 @@ fetch('/view?deviceId=' + encodedDeviceId, {
 });
 
   
-});
+};
+
+document.addEventListener('DOMContentLoaded',graphrender);
 
 function processData(dataArray) {
   console.log("data")
