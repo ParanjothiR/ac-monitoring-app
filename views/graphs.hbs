@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    {{!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png"> --}}
+    {{!-- <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png"> --}}
+    {{!-- <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png"> --}}
+    <link rel="manifest" href="clientjs/favicons/site.webmanifest">
+    {{!-- <link rel="mask-icon" href="assets/favicons/safari-pinned-tab.svg" color="#5bbad5"> --}}
+    {{!-- <link rel="shortcut icon" href="assets/favicons/favicon.ico"> --}}
+    <meta name="msapplication-TileColor" content="#da532c">
+    {{!-- <meta name="msapplication-config" content="assets/favicons/browserconfig.xml"> --}}
+    <meta name="theme-color" content="#a789d4">
+
+    <!--=============== BOXICONS ===============-->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--=============== SWIPER CSS ===============-->
+    {{!-- <link rel="stylesheet" href="assets/css/swiper-bundle.min.css"> --}}
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="clientcss/graphs.css">
+
+    <title> AC - Monitoring Device </title>
+
+
+<style>
+
+    .chartMenu {
+        width: 100vw;
+        height: 40px;
+        background: #1A1A1A;
+        color: rgba(54, 162, 235, 1);
+    }
+    .chartMenu p {
+        padding: 10px;
+        font-size: 20px;
+    }
+    .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(54, 162, 235, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 5%;
+    }
+    .chartBox {
+        width: 60%; 
+        padding: 20px;
+        border-radius: 20px;
+        border: solid 3px rgba(54, 162, 235, 1);
+        background: rgb(143, 136, 148);
+    }
+
+    
+    .canvasjs-chart-canvas {
+        background-color: transparent; 
+    }
+    .canvasjs-chart-canvas .canvasjs-y-axis path {
+        stroke: black; 
+    }
+    .canvasjs-chart-canvas .canvasjs-x-axis path {
+        stroke: black; 
+    }
+    .canvasjs-chart-canvas .canvasjs-y-axis .tickLine line {
+        stroke: black; 
+    }
+    .canvasjs-chart-canvas .canvasjs-x-axis .tickLine line {
+        stroke: black; 
+    }
+</style>
+
+
+</head>
+
+<body>
+    
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">AC - Monitoring device id  {{id}}</a>
+
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item ">
+                        <a href="#home" class="nav__link">
+                            <i class='bx bx-home'></i>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="#skills" class="nav__link">
+                            <i class='bx bx-book'></i>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="#work" class="nav__link">
+                            <i class='bx bx-briefcase-alt-2'></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--=============== theme change button ===============-->
+            <i class='bx bx-moon change-theme change-theme-button' id="theme-button"></i>
+
+        </nav>
+    </header>
+
+    <!--=============== MAIN ===============-->
+    <main class="main">
+        <!--=============== HOME ===============-->
+        <section class="home section" id="home">
+            <div class="home__container container grid">
+                <div class="home__data">
+                    <span class="home__greeting"></span>
+                    <h1 class="home__name">Water Level</h1> <br> 
+                
+                    <nav>
+                        <div class="water"></div>
+                       
+                        <div class="desc _50">
+                            <h2>Today</h2>
+                            <p>
+                            <b class="level"><span>%</span></b>
+                            </p>
+                        </div>
+                    </nav>
+                    <div class="home__button">
+                    </div>
+                </div>
+
+                <div class="">
+                    
+                </div>
+
+        <!--=============== SKILLS ===============-->
+        <section class="skills section" id="skills">
+            <span class="section__subtitle"></span>
+            <h2 class="section__title">Temperature Level</h2>
+
+            <div class="skills__container container grid">
+
+                <div class="skills__content">
+                    <div class="temp">
+                        <div class="temp__logo">Nest</div>
+                        <div class="temp__comet"></div>
+                        <canvas class="temp__fizz"></canvas>
+                        <div class="temp__label">Temp</div>
+                        <div class="temp__value">0</div>
+                        <div class="temp__dial"></div>
+                    </div>
+                </div>
+            <!-- statue -->
+            </div>
+        </section>
+
+        <!--=============== WORK ===============-->
+        <section class="work section" id="work">
+            <span class="section__subtitle"></span>
+            <h2 class="section__title">Temperature Graph</h2>
+
+            <div class="work__filters">
+                <!-- <span class="work__item active-work" data-filter='all'>All</span> -->
+                <!-- <span class=" work__item" data-filter='.web'>Web</span>
+                <span class=" work__item" data-filter='.movil'>Movil</span>-->
+                <span class=" work__item" data-filter='.design'>Dynamic Data</span>
+            </div>
+
+
+            
+            <div class="work__container container grid">
+
+                
+                <div class="">
+
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+                    {{!-- <script src="script.js"></script> --}}
+                  
+                   
+                   
+                  <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+ <script>
+   
+    function createTemperatureChart(dataArray) {
+  let dps = processData(dataArray);
+  console.log(dps)
+  console.log("hi")
+  let chart = new CanvasJS.Chart("chartContainer", {
+    title: {
+      text: "Temperature Chart",
+    },
+    data: [{
+      label: 'Temperature',
+      type: 'line',
+      dataPoints: dps,
+      showInLegend: true,
+      legendText: 'Temperature',
+      markerSize: 0,
+      lineThickness: 3,
+      markerBorderColor: 'white',
+      markerBorderThickness: 2,
+      markerType: 'none',
+      lineTension: 5,
+      backgroundColor: 'transparent',
+    }],
+    axisY: {
+      title: 'Temperature (°C)',
+      minimum: 14,
+      maximum: 34,
+       gridColor: "transparent"
+
+    },
+    axisX: {
+      title: 'Time',
+      type: 'time',
+      time: {
+       time: {
+       format: 'HH:mm', // Format for displaying time on the X-axis
+       interval: 1, // Interval in minutes between tick marks
+       unit: 'minute', // Specify 'minute' for the interval
+       displayFormat: 'HH:mm', // Format for displaying time on tooltip
+    },
+    backgroundColor: "transparent"
+    }
+    }
+  });
+
+  chart.render();
+}
+                        
+</script>
+
+                
+                    <div class="ac-status-label ac-off">OFF</div>
+
+                    <!-- Indicator for AC ON (Green) -->
+                    <div class="ac-status-label ac-on">ON</div>  
+
+                    <div class="chartCard">
+                        <div class="chartBox">
+                            <div id="chartContainer-acState" ></div>
+
+                            <div id="chartContainer" style="height: 400px; width: 100%;"><h1>rfwrf</h1></div>
+                        </div>                   
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script src="clientjs/scrollreveal.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+    <script src="clientjs/swiper-bundle.min.js"></script>
+    <script src="clientjs/mixitup.min.js"></script>
+    <script src="clientjs/graphs.js"></script>
+
+</body>
+
+</html>

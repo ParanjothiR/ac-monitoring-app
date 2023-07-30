@@ -1,68 +1,243 @@
 const express=require("express")
 const router=express.Router()
 const jwt = require("jsonwebtoken")
-const validateToken=require("../Middleware/validateToken")
+const bcrypt = require('bcrypt');
+require('dotenv').config();
 const userdb=require("../Model/uservalues")
+const devicedb=require("../Model/deviceslist")
+const sensordb=require("../Model/sensorvalue");
+const deviceslist = require("../Model/deviceslist");
 
 router.post('/register',async(req,res)=>{
-    const {deviceid,email,password}=req.body
     console.log(req.body)
+    const {email,pass,phone}=req.body
+    console.log(pass)
     try{
-        const id= await userdb.findOne({deviceid})
-
-        if(id){
-            res.send("you already register")
+        const findemail= await userdb.findOne({email:req.body.email})
+         const hashpassword1 = await hashPassword(pass)
+         console.log(hashpassword1.pass1)
+        if(findemail){
+            res.redirect('/register')
         }else{
-            res.send("sucessfully register")
             const userregister= new userdb({
-                deviceid,
                 email,
-                password
+                password:hashpassword1.pass1,
+                phoneno:phone
             })
             await userregister.save()
             console.log("sucessfuly register data save in db")
+           // res.render('register', { message: 'Successfully registered!..you login your account'})
+           res.redirect('/register')
         }
     }catch(err){
-        res.send(err)
+        res.render('register', { error: err.message });
     }
 })
 
-  
+async function hashPassword(pass) {
+    try {
+        console.log(pass)
+      const hash = await bcrypt.hash(pass, 10);
+      console.log(hash);
+      return {pass1:hash}
+    } catch (error) {
+      console.error('Error hashing password:', error);
+    }
+  }
+
+const verifyUserlogin=async(email,password)=>{
+    try{
+       const user=await userdb.findOne({email})
+       console.log(user) 
+       if(!user){
+           return {status:'error',error:'user not found'}
+       }
+       const expiresInThirtyDays = 2592000;
+       console.log("joo")
+       if(await bcrypt.compare(password,user.password)){
+        console.log("hike")
+             token=jwt.sign({
+                email:user.email,type:'user'
+             },process.env.ACCESS_TOKEN,{expiresIn:expiresInThirtyDays})
+             console.log(token)
+             return {status:'ok',data:token}
+       }
+       return {status:'error',error:'invalid'}
+    }catch(error){
+           console.log(error)
+           return {status:'error',error:'time out'}
+    }
+}
+
 router.post('/login',async(req,res)=>{
     const {email,password}=req.body
-    //console.log(req.body)
+    console.log(req.body)
     try{
-        const data= await userdb.findOne({email})
-
-        if(!data){
-            res.send("your email id incorect")
-        }else{
-            const pass=data.password
-            if(pass===password){
-            res.send("susessfully login the user")
-            const expiresInOneMonth = 30 * 24 * 60 * 60
-            console.log(expiresInOneMonth)
-             const  accessToken=jwt.sign({
-                user:{
-                    deviceid:data.deviceid,
-                    email:data.email
-                }
-              }, process.env.ACCESS_TOKEN,
-                { expiresIn: expiresInOneMonth }
-             )
-             console.log(accessToken)
-            }else{
-                res.send("your password is incorect")
-            }
-        }
-       // console.log(data);
-       
-      
+        const response=await verifyUserlogin(email,password);
+     if(response.status==='ok'){
+        console.log("joith")
+        res.cookie('accesstoken',token,{maxAge:30*24*60*60*1000,httpOnly:true})
+        res.redirect('/dashboard')
+    }else{
+        res.redirect('/register')
+    }  
     }catch(err){
-          res.send(err)
+
+          res.render('register')
+    }
+})
+
+router.get('/dashboard',async(req,res)=>{
+    const {accesstoken}=req.cookies
+    console.log(accesstoken)
+    try{
+        const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
+        const email1=verify.email
+        console.log(verify.email)
+        const avilable=await devicedb.find({email:email1})
+        if (avilable.length > 0) {
+            const deviceArray = avilable[0].devicesarray;
+            console.log(deviceArray);
+            return res.render('dashboard', { devices: deviceArray }); 
+        } else {
+            return res.render('dashboard', { devices: [] }); 
+        }
+        
+
+    }catch(err){
+        res.render('dashboard')
     }
 })
 
 
+
+router.post('/delete',async(req,res)=>{
+    const {deviceId}=req.body;
+    console.log(deviceId)
+    const {accesstoken}=req.cookies
+    console.log(accesstoken)
+    try{
+        const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
+        const email1=verify.email
+        console.log(verify.email)
+        const avilable=await devicedb.find({email:email1})
+        console.log(avilable)
+        if(avilable.length>0){
+            const deviceexixts=avilable[0].devicesarray.includes(deviceId)
+            console.log(deviceexixts)
+           if(deviceexixts){
+            await devicedb.updateOne(
+                {email:email1},
+                { $pull: { devicesarray: deviceId} } // The update operation using $pull
+              );
+              
+            console.log("sucess do for that")
+            res.send("ok")
+           }else{
+               res.render('/dashboard')
+           }
+        }else{
+            res.render('/dashboard')
+        }
+       
+    }catch(error){
+        res.send(error)
+    }
+    
+   
+})
+
+
+
+router.post('/addid',async(req,res)=>{
+        const {deviceid1}=req.body
+        const {accesstoken}=req.cookies
+        try{
+        const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
+        const email1=verify.email
+        console.log(verify.email)
+        const avilable=await devicedb.findOne({email:email1})
+        console.log(avilable)
+        if(!avilable){
+            await devicedb.create({
+                email:email1,
+                devicesarray: [deviceid1],
+              });
+        }else{
+           const deviceexixts=await avilable.devicesarray.includes(deviceid1)
+           if(!deviceexixts){
+               avilable.devicesarray.push(deviceid1)
+               await avilable.save()
+           }
+        }
+        console.log("sucess")
+        res.redirect('/dashboard')
+        }catch(err){
+            res.send(err)
+        }
+
+}) 
+const verifytoken=(accesstoken)=>{
+    try{
+       const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
+       console.log(verify.email)
+       if(verify.type==='user'){
+             return true
+       }else{
+            return false
+       }
+    }catch(error){
+          return false
+    }
+}
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('accesstoken');
+    res.redirect('/register');
+  });
+  
+  router.get('/register',(req,res)=>{
+    //console.log("jii")
+    const {accesstoken}=req.cookies
+    if(verifytoken(accesstoken)){
+        return res.redirect('/dashboard')
+    }else{
+        return res.render('register')
+    }
+})
+
+router.get('/graphs', (req, res) => {
+    const { id } = req.query;
+    console.log(id)
+    res.render('graphs', { id });
+  });
+
+router.get('/view',async(req,res)=>{
+    console.log("hello")
+    const { deviceId } = req.query;
+    console.log(deviceId)
+    const {accesstoken}=req.cookies
+    try{
+    const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
+    const email1=verify.email
+    console.log(email1)
+    const sensordatas=await sensordb.find({deviceid:deviceId}).sort({timestamp:-1}).limit(10)
+    //console.log(sensordatas)
+    const singlerecord=await sensordb.findOne({deviceid:deviceId}).sort({ timestamp: -1 })
+    console.log(singlerecord)
+    sensordatas.reverse()
+    console.log(sensordatas)
+    const twosensordatas={
+        singledata:singlerecord,
+        multipledata:sensordatas
+    }
+   // console.log(sesensordatas)
+        res.send(twosensordatas)
+
+       
+    }catch(err){
+
+    }
+})
 
 module.exports=router

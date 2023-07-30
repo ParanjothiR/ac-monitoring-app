@@ -1,11 +1,6 @@
 const mongoose = require("mongoose")
 
 const Schemadata= new mongoose.Schema({
-    deviceid:{
-        required:true,
-        type:String,
-        unique:true
-    },
     email:{
         required:true,
         type:String,
@@ -15,5 +10,9 @@ const Schemadata= new mongoose.Schema({
         required:true,
         type:String
     },
+    phoneno:{
+        require:true,
+        type:String
+    }
 })
 module.exports = mongoose.model('uservalues',Schemadata);

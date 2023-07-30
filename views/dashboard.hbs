@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{!-- <link rel="shortcut icon" href="img/logo/apple-brands.svg" type="image/x-icon"> --}}
+    {{!-- <link rel="stylesheet" href="css/all.css" type="text/css"> --}}
+    {{!-- <link rel="stylesheet" href="css/normalize.css" type="text/css"> --}}
+    <link rel="stylesheet" href="clientcss/dashboard.css" type="text/css">
+    <title>Dashboard Template</title>
+
+    <style>
+        .form-container {
+            /* Your existing styles for the form container */
+            /* Add styles for blurring background */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1;
+            display: none;
+        }
+
+        .form-container form {
+            /* Your existing styles for the form */
+            /* Add styles to make the form look like a grid */
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style for the form input */
+        .form-container input[type="text"] {
+            padding: 15px; /* Increase padding */
+            width: 100%; /* Take full width */
+            border: 2px solid #ccc; /* Add border */
+            border-radius: 5px;
+            font-size: 16px;
+            grid-column: 1 / -1;
+        }
+
+        /* Style for the form submit button */
+        .form-container input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: transparent; /* Set background to transparent */
+            color: #007bff; /* Text color */
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+            grid-column: 1 / -1;
+            border: 2px solid #007bff; /* Add border to create a button-like appearance */
+        }
+
+        /* Change the color of the button text on hover */
+        .form-container input[type="submit"]:hover {
+            color: #0056b3;
+            
+        }
+
+        /* Style for the close button */
+        .form-container .close-form {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Style for the device grid container */
+        .device-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            padding: 20px;
+        }
+
+        /* Style for each device box */
+        .device-box {
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+        .card_btn{
+            border: none;
+            width:200px;
+            height: 50px;
+            background-color: white;
+        }
+
+        .delete-button {
+            background-color: #e9e1e2;
+            color: #000000;
+            border: none;
+            margin-left: 20px;
+        }
+
+        /* showbutton */
+
+        .delete-button,
+        .show-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .show-button {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <!-- Navigation Section -->
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <!-- <ion-icon name="logo-apple"></ion-icon> -->
+                        </span>
+                        <span class="title">Ac-Monitoring</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+               
+                <li>
+                    <a href="logout">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Log Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Main Section -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                
+                <!-- User Account -->
+                <div class="user">
+                    <img src="lambo.jpeg" alt="user image">
+                </div>
+                <div class="accountMenu">
+                    <h3>Sakthiii<br /><span>Entrepreneur</span></h3>
+                    <ul>
+                        <li>
+                            <img src="user.png" alt="profile">
+                            <a href="#">My Profile</a>
+                        </li>
+                        <li>
+                            <img src="edit.png" alt="profile">
+                            <a href="#">Edit Profile</a>
+                        </li>
+                        <li>
+                            <img src="envelope.png" alt="profile">
+                            <a href="#">Inbox</a>
+                        </li>
+                        <li>
+                            <img src="settings.png" alt="profile">
+                            <a href="#">Settings</a>
+                        </li>
+                        <li>
+                            <img src="question.png" alt="profile">
+                            <a href="#">Help</a>
+                        </li>
+                        <li>
+                            <img src="log-out.png" alt="profile">
+                            <a href="logout">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Cards -->
+
+        
+        <ul class="cards">
+            <!-- Add Device button card -->
+            <li class="cards_item cardBox">
+                <div class="card">
+                    <div class="card_content cardDetails">
+                        <h2 class="card_title">Add Device</h2>
+                        <button class="btn card_btn" onclick="toggleForm('form1')">Add</button>
+                    </div>
+                </div>
+            </li>
+            <!-- Existing device cards -->
+        </ul>
+
+        <!-- Device grid container -->
+        <div class="device-grid" id="deviceGrid">
+        {{#each devices}}
+        <div class="device-box" data-device-id="{{this}}">
+        <h3>Device - {{this}}</h3>
+        <button onclick="deleteDevice('{{this}}')" class="delete-button">Delete</button>
+        <button onclick="showDevice('{{this}}')" class="show-button">Show</button>
+        </div>
+       {{/each}}
+        </div>
+
+            
+                <!-- Form to be shown when "Add" button is clicked -->
+       <div class="form-container" id="form1">
+            <span class="close-form" onclick="toggleForm('form1')">&times;</span>
+            <form id="addDeviceform" action="addid" method="post" >
+                <label for="deviceid1">Device ID:</label>
+                <input type="text" id="deviceid1" name="deviceid1" required><br>
+    
+                {{!-- <input type="submit" value="Add Device"> --}}
+                <button onclick="addDevice(event)">Add Device</button>
+            </form>
+        </div>
+    </div>
+  
+  
+    {{!-- <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script> --}}
+    {{!-- <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> --}}
+ 
+
+    <script src="clientjs/dashboard.js"></script>
+</body>
+
+</html>
