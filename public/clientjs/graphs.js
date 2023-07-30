@@ -274,7 +274,7 @@ fetch('/view?deviceId=' + encodedDeviceId, {
   
 };
 
-document.addEventListener('DOMContentLoaded',graphrender);
+graphrender()
 
 function processData(dataArray) {
   console.log("data")

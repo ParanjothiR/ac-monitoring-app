@@ -67,9 +67,8 @@ function addDevice(event) {
     event.preventDefault();
     const deviceid = document.getElementById('deviceid1').value.trim();
     if (deviceid !== "") {
-        
+          document.getElementById("addDeviceform").submit();
     }
-    document.getElementById("addDeviceform").submit();
 }
 
 function deleteDevice(deviceId){

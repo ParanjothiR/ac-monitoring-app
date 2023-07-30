@@ -42,7 +42,7 @@ document.getElementById("registrationForm").addEventListener("submit", function(
   const passwordErrorElement = document.getElementById("passwordError");
 
   if (email.trim() === '' || password === ''|| phone==='') {
-      
+      alert("you are not enter email")
   }else if(!passwordPattern.test(password)){
     passwordErrorElement.textContent = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, $, !, %, *, ?, &), and be between 8 and 12 characters long."
     setTimeout(function () {

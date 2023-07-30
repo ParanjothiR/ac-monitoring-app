@@ -8,16 +8,25 @@ const devicedb=require("../Model/deviceslist")
 const sensordb=require("../Model/sensorvalue");
 const deviceslist = require("../Model/deviceslist");
 
-router.post('/register',async(req,res)=>{
-    console.log(req.body)
-    const {email,pass,phone}=req.body
-    console.log(pass)
+router.get('/',async(req,res)=>{
     try{
-        const findemail= await userdb.findOne({email:req.body.email})
+       res.redirect('/register')
+    }catch(err){
+        res.redirect('/register') 
+    }
+})
+
+router.post('/register',async(req,res)=>{
+   // console.log(req.body)
+    const {email,pass,phone}=req.body
+   /// console.log(pass)
+    try{
+        const findemail= await userdb.findOne({email:email})
          const hashpassword1 = await hashPassword(pass)
-         console.log(hashpassword1.pass1)
+       ///  console.log(hashpassword1.pass1)
+        // console.log(findemail)
         if(findemail){
-            res.redirect('/register')
+            res.render('register',{message:"You are Already register"})
         }else{
             const userregister= new userdb({
                 email,
@@ -25,9 +34,9 @@ router.post('/register',async(req,res)=>{
                 phoneno:phone
             })
             await userregister.save()
-            console.log("sucessfuly register data save in db")
+         //   console.log("sucessfuly register data save in db")
            // res.render('register', { message: 'Successfully registered!..you login your account'})
-           res.redirect('/register')
+           res.render('register',{message:"Sucessfully Register"})
         }
     }catch(err){
         res.render('register', { error: err.message });
@@ -38,62 +47,61 @@ async function hashPassword(pass) {
     try {
         console.log(pass)
       const hash = await bcrypt.hash(pass, 10);
-      console.log(hash);
+      //console.log(hash);
       return {pass1:hash}
     } catch (error) {
-      console.error('Error hashing password:', error);
+        return {error:error}
     }
   }
 
 const verifyUserlogin=async(email,password)=>{
     try{
        const user=await userdb.findOne({email})
-       console.log(user) 
+      // console.log(user) 
        if(!user){
-           return {status:'error',error:'user not found'}
+           return {status:'error',errors:'user not found'}
        }
        const expiresInThirtyDays = 2592000;
-       console.log("joo")
+       //console.log("joo")
        if(await bcrypt.compare(password,user.password)){
         console.log("hike")
              token=jwt.sign({
                 email:user.email,type:'user'
              },process.env.ACCESS_TOKEN,{expiresIn:expiresInThirtyDays})
              console.log(token)
-             return {status:'ok',data:token}
-       }
-       return {status:'error',error:'invalid'}
+            return {status:'ok',data:token}
+       }  
+       return {status:'error',errors:'Invalid Password'}
     }catch(error){
-           console.log(error)
-           return {status:'error',error:'time out'}
+           //console.log(error)
+           return {status:'error',errors:'time out'}
     }
 }
 
 router.post('/login',async(req,res)=>{
     const {email,password}=req.body
-    console.log(req.body)
+    //console.log(req.body)
     try{
         const response=await verifyUserlogin(email,password);
      if(response.status==='ok'){
-        console.log("joith")
+      //  console.log("joith")
         res.cookie('accesstoken',token,{maxAge:30*24*60*60*1000,httpOnly:true})
         res.redirect('/dashboard')
     }else{
-        res.redirect('/register')
+        res.render('register',{errors:response.errors})
     }  
     }catch(err){
-
-          res.render('register')
+          res.render('register',{errors:err})
     }
 })
 
 router.get('/dashboard',async(req,res)=>{
     const {accesstoken}=req.cookies
-    console.log(accesstoken)
+  //  console.log(accesstoken)
     try{
         const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
         const email1=verify.email
-        console.log(verify.email)
+      //  console.log(verify.email)
         const avilable=await devicedb.find({email:email1})
         if (avilable.length > 0) {
             const deviceArray = avilable[0].devicesarray;
@@ -102,10 +110,8 @@ router.get('/dashboard',async(req,res)=>{
         } else {
             return res.render('dashboard', { devices: [] }); 
         }
-        
-
     }catch(err){
-        res.render('dashboard')
+        res.render('dashboard',{error:err})
     }
 })
 
@@ -113,25 +119,25 @@ router.get('/dashboard',async(req,res)=>{
 
 router.post('/delete',async(req,res)=>{
     const {deviceId}=req.body;
-    console.log(deviceId)
+   // console.log(deviceId)
     const {accesstoken}=req.cookies
-    console.log(accesstoken)
+   // console.log(accesstoken)
     try{
         const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
         const email1=verify.email
-        console.log(verify.email)
+      //  console.log(verify.email)
         const avilable=await devicedb.find({email:email1})
-        console.log(avilable)
+       // console.log(avilable)
         if(avilable.length>0){
             const deviceexixts=avilable[0].devicesarray.includes(deviceId)
-            console.log(deviceexixts)
+         //   console.log(deviceexixts)
            if(deviceexixts){
             await devicedb.updateOne(
                 {email:email1},
                 { $pull: { devicesarray: deviceId} } // The update operation using $pull
               );
               
-            console.log("sucess do for that")
+           // console.log("sucess do for that")
             res.send("ok")
            }else{
                res.render('/dashboard')
@@ -155,9 +161,9 @@ router.post('/addid',async(req,res)=>{
         try{
         const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
         const email1=verify.email
-        console.log(verify.email)
+     //   console.log(verify.email)
         const avilable=await devicedb.findOne({email:email1})
-        console.log(avilable)
+      //  console.log(avilable)
         if(!avilable){
             await devicedb.create({
                 email:email1,
@@ -170,7 +176,7 @@ router.post('/addid',async(req,res)=>{
                await avilable.save()
            }
         }
-        console.log("sucess")
+       // console.log("sucess")
         res.redirect('/dashboard')
         }catch(err){
             res.send(err)
@@ -197,7 +203,6 @@ router.get('/logout', (req, res) => {
   });
   
   router.get('/register',(req,res)=>{
-    //console.log("jii")
     const {accesstoken}=req.cookies
     if(verifytoken(accesstoken)){
         return res.redirect('/dashboard')
