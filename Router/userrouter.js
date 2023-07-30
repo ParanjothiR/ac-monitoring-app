@@ -101,17 +101,25 @@ router.get('/dashboard',async(req,res)=>{
     try{
         const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
         const email1=verify.email
-      //  console.log(verify.email)
+        var profile=""
+        if(email1){
+             const k= await userdb.find({email:email1})
+             if(k){
+                profile=k
+                //console.log(profile)
+            }
+        }
+       // console.log(profile)
         const avilable=await devicedb.find({email:email1})
         if (avilable.length > 0) {
             const deviceArray = avilable[0].devicesarray;
             console.log(deviceArray);
-            return res.render('dashboard', { devices: deviceArray }); 
+            return res.render('dashboard', { devices: deviceArray ,data:profile}); 
         } else {
-            return res.render('dashboard', { devices: [] }); 
+            return res.render('dashboard', { devices: [] ,data:profile}); 
         }
     }catch(err){
-        res.render('dashboard',{error:err})
+        res.render('dashboard',{error:err,data:profile})
     }
 })
 

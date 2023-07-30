@@ -257,7 +257,9 @@ fetch('/view?deviceId=' + encodedDeviceId, {
 .then((data) => {
     console.log('Data received:', data);
     const levelElement = document.querySelector('.level > span');
-    levelElement.textContent = data.singledata.waterLevelPercentage;
+    const waterlevel=data.singledata.waterLevelPercentage
+    
+    levelElement.textContent =Math.floor(waterlevel)+"%"
 
     const tempValueElement = document.querySelector('.temp__value');
     tempValueElement.textContent = data.singledata.temperature + "deg cel";
@@ -285,25 +287,4 @@ function processData(dataArray) {
   }));
 }
 
-// function parseTimestamp(timestamp) {
-//   // Assuming the timestamp is in the format "MM/DD/YYYY, h:mm:ss A"
-//   const parts = timestamp.split(', ')[1].split(':');
-//   const hours = parseInt(parts[0]);
-//   const minutes = parseInt(parts[1]);
-//   const isPM = parts[2].toLowerCase().includes('pm');
-  
-//   if (isPM && hours !== 12) {
-//     // Convert to 24-hour format
-//     return `${hours + 12}:${minutes}`;
-//   } else if (!isPM && hours === 12) {
-//     // Midnight (12 AM) should be represented as 00:00
-//     return `00:${minutes}`;
-//   } else {
-//     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-//   }
-// }
 
-// function parseTimestamp(timestamp) {
-//   const options = { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
-//   return new Date(timestamp).toLocaleString('en-US', options);
-// }

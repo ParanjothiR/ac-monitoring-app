@@ -24,7 +24,15 @@ let userToggler = document.querySelector('.user');
 userToggler.onclick = function () {
     toggleMenu.classList.toggle('active');
 }
+// document.addEventListener('click', function (event) {
+//     // Check if the clicked element or any of its ancestors are the accountMenu or userToggler
+//     let isInsideAccountMenu = toggleMenu.contains(event.target) || event.target === userToggler;
 
+//     if (!isInsideAccountMenu) {
+//         // If the click is outside the accountMenu, remove the 'active' class to hide the menu
+//         toggleMenu.classList.remove('active');
+//     }
+// });
 
 
 

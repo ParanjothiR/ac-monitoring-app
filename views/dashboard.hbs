@@ -143,7 +143,7 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="dashboard">
                         <span class="icon">
                             <!-- <ion-icon name="logo-apple"></ion-icon> -->
                         </span>
@@ -151,7 +151,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="dashboard">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
@@ -183,26 +183,19 @@
                 <div class="accountMenu">
                     <h3>My Profile</h3>
                     <ul>
+                        {{#each data}}
                         <li>
-                            <img src="user.png" alt="profile">
-                            <a href="#">email id</a>
+                            
+                            <h3>{{this.email}}</h3>
                         </li>
-                        {{!-- <li>
-                            <img src="edit.png" alt="profile">
-                            <a href="#">Edit Profile</a>
-                        </li>
+                       {{/each}}
+                        {{#each data}}
                         <li>
-                            <img src="envelope.png" alt="profile">
-                            <a href="#">Inbox</a>
+                            <h3>ph.no:</h3>
+                            <h3>{{this.phoneno}}</h3>
                         </li>
-                        <li>
-                            <img src="settings.png" alt="profile">
-                            <a href="#">Settings</a>
-                        </li>
-                        <li>
-                            <img src="question.png" alt="profile">
-                            <a href="#">Help</a>
-                        </li> --}}
+                       {{/each}}
+                       
                         <li>
                             <img src="log-out.png" alt="profile">
                             <a href="logout">Log Out</a>
