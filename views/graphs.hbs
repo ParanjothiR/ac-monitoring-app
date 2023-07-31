@@ -47,14 +47,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-left: 5%;
+        margin-left: 4%;
     }
     .chartBox {
         width: 60%; 
         padding: 20px;
         border-radius: 20px;
         border: solid 3px rgba(54, 162, 235, 1);
-        background: rgb(143, 136, 148);
+        background: rgb(255, 255, 255);
     }
 
     
@@ -73,7 +73,64 @@
     .canvasjs-chart-canvas .canvasjs-x-axis .tickLine line {
         stroke: black; 
     }
+    #chartContainer-acState{
+        color: #000000;
+    }
+    .fx{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    h4{
+        color: #1A1A1A;
+    }
+    #sp1{
+        font-size: 25px;
+        color: green;
+    }
+    #sp2{
+        font-size: 25px;
+        color: red;
+    }
+
+
+
+@media screen and (max-width: 768px) {
+
+            /* Navbar styles */
+.nav__menu {
+    display: none;
+}
+
+
+
+.chartCard 
+{
+     margin-left: -8%;
+    width: 100%; /* Adjust width to fit the smaller screen */
+}
+
+            /* Center the graph on smaller screens */
+#chartContainer-acState,
+#chartContainer {
+    margin: 0 auto; /* Center horizontally */
+}
+
+}
+
+
+
+.level{
+    color: #000000;
+}
+
+.ui{
+    display: flex;
+    justify-content:space-between;
+}
+
 </style>
+
 
 
 </head>
@@ -82,7 +139,16 @@
     
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="#" class="nav__logo">AC - Monitoring device id  {{id}}</a>
+
+            <div class="ui">
+              
+                    <a href="dashboard" class="nav__link">
+                        <i class='bx bx-home'> Dashboard</i>
+                    </a>
+                
+            </div>
+
+            <a href="#" class="nav__logo" style="font-size:x-large" >AC - Monitoring device id  {{id}}</a>
 
             <div class="nav__menu">
                 <ul class="nav__list">
@@ -107,6 +173,11 @@
             </div>
 
             <!--=============== theme change button ===============-->
+           
+                    <a href="dashboard" class="nav__link">
+                        <i class='bx bx-book'> Back</i>
+                    </a>
+           
             <i class='bx bx-moon change-theme change-theme-button' id="theme-button"></i>
 
         </nav>
@@ -146,30 +217,36 @@
 
             <div class="skills__container container grid">
 
-                <div class="skills__content">
-                    <div class="temp">
-                        <div class="temp__logo">Nest</div>
+                <div class="skills__content skill">
+                    <div class="temp skil">
+                        <div class="temp__logo">Temperature</div>
                         <div class="temp__comet"></div>
                         <canvas class="temp__fizz"></canvas>
-                        <div class="temp__label">Temp</div>
-                        <div class="temp__value">0</div>
+                        <div class="temp__label">0</div>
+                        <div class="temp__value"></div>
                         <div class="temp__dial"></div>
+                    </div>
+                </div>
+                <div class="skills__content skill">
+                    <div class="skil">
+                        
                     </div>
                 </div>
             <!-- statue -->
             </div>
+            
         </section>
 
         <!--=============== WORK ===============-->
         <section class="work section" id="work">
             <span class="section__subtitle"></span>
-            <h2 class="section__title">Temperature Graph</h2>
+            <h2 class="section__title"></h2>
 
             <div class="work__filters">
                 <!-- <span class="work__item active-work" data-filter='all'>All</span> -->
                 <!-- <span class=" work__item" data-filter='.web'>Web</span>
                 <span class=" work__item" data-filter='.movil'>Movil</span>-->
-                <span class=" work__item" data-filter='.design'>Dynamic Data</span>
+                <span class=" work__item" data-filter='.design'></span>
             </div>
 
 
@@ -201,7 +278,7 @@
       label: 'Temperature',
       type: 'line',
       dataPoints: dps,
-      showInLegend: true,
+      showInLegend: false,
       legendText: 'Temperature',
       markerSize: 0,
       lineThickness: 3,
@@ -240,17 +317,18 @@ setInterval(graphrender,180000)
                         
 </script>
 
-                
-                    <div class="ac-status-label ac-off">OFF</div>
-
-                    <!-- Indicator for AC ON (Green) -->
-                    <div class="ac-status-label ac-on">ON</div>  
-
                     <div class="chartCard">
                         <div class="chartBox">
+                            
                             <div id="chartContainer-acState" ></div>
 
+                    
+
                             <div id="chartContainer" style="height: 400px; width: 100%;"><h1>rfwrf</h1></div>
+
+                            <div class="fx">
+                            <h4> <span id="sp1">--</span> AC ON</h4><h4><span id="sp2">--</span> AC OFF</h4>
+                            </div>
                         </div>                   
                     </div>
                 </div>

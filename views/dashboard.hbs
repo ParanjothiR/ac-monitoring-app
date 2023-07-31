@@ -73,8 +73,8 @@
         /* Style for the close button */
         .form-container .close-form {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 35%;
             font-size: 24px;
             cursor: pointer;
             color: #333;
@@ -132,6 +132,13 @@
             background-color: #007bff;
             color: #fff;
         }
+        .sk{
+            background-color: #4093eb;
+            border-radius: 10px;
+            padding: 10px;
+            border: none;
+            color: white;
+        }
 
     </style>
 
@@ -178,7 +185,7 @@
                 
                 <!-- User Account -->
                 <div class="user">
-                    <img src="lambo.jpeg" alt="user">
+                    <img src="ac1.jpg" alt="user">
                 </div>
                 <div class="accountMenu">
                     <h3>My Profile</h3>
@@ -197,7 +204,7 @@
                        {{/each}}
                        
                         <li>
-                            <img src="log-out.png" alt="profile">
+                            <img src="ac1.jpg" alt="profile">
                             <a href="logout">Log Out</a>
                         </li>
                     </ul>
@@ -212,7 +219,7 @@
                 <div class="card">
                     <div class="card_content cardDetails">
                         <h2 class="card_title">Add Device</h2>
-                        <button class="btn card_btn" onclick="toggleForm('form1')">Add</button>
+                        <button class="btn card_btn" id="sj" onclick="toggleForm('form1')">Add</button>
                     </div>
                 </div>
             </li>
@@ -239,14 +246,14 @@
                 <input type="text" id="deviceid1" name="deviceid1" required><br>
     
                 {{!-- <input type="submit" value="Add Device"> --}}
-                <button onclick="addDevice(event)">Add Device</button>
+                <button onclick="addDevice(event)" class="sk">Add Device</button>
             </form>
         </div>
     </div>
   
   
-    {{!-- <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script> --}}
-    {{!-- <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> --}}
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
  
 
     <script src="clientjs/dashboard.js"></script>

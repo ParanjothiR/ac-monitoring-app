@@ -260,12 +260,13 @@ fetch('/view?deviceId=' + encodedDeviceId, {
     const waterlevel=data.singledata.waterLevelPercentage
     
     levelElement.textContent =Math.floor(waterlevel)+"%"
+    
 
-    const tempValueElement = document.querySelector('.temp__value');
+    const tempValueElement = document.querySelector('.temp__label');
     tempValueElement.textContent = data.singledata.temperature + "deg cel";
 
     const chartContainer = document.getElementById('chartContainer-acState');
-    chartContainer.textContent = data.singledata.acState
+    chartContainer.textContent ="Current State: " + data.singledata.acState;
     const dataArray=data.multipledata;
     createTemperatureChart(dataArray);
 })
@@ -286,5 +287,66 @@ function processData(dataArray) {
     lineColor: item.acState === 'AC ON' ? 'green' : 'red', // Set the line color based on AC status
   }));
 }
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const emoji = document.querySelector('.emoji'),
+      slider = document.querySelector('.slider'),
+      tempOutput = document.querySelector('.temperature-output'),
+      displayTemp = temperature => {
+          //Display temperature
+          tempOutput.textContent = temperature;
+
+          //Display emoji
+          if (temperature >= 0 && temperature <= 8) {
+              emoji.textContent = '🥶';
+              emoji.setAttribute('aria-label', 'freezing face');
+          } else if (temperature > 8 && temperature <= 16) {
+              emoji.textContent = '😬';
+              emoji.setAttribute('aria-label', 'cold face');
+          } else if (temperature > 16 && temperature <= 24) {
+              emoji.textContent = '😊';
+              emoji.setAttribute('aria-label', 'happy face');
+          } else if (temperature > 24 && temperature <= 32) {
+              emoji.textContent = '😅';
+              emoji.setAttribute('aria-label', 'warm face');
+          } else {
+              emoji.textContent = '🥵';
+              emoji.setAttribute('aria-label', 'hot face');
+          }
+      }
+
+  slider.addEventListener('input', () => displayTemp(slider.value));
+
+  //CodePen preview window
+  if (location.pathname.includes('fullcpgrid')) {
+
+      let temperature = 0;
+
+      const interval = setInterval(() => {
+
+          //Remove interval if max temperature is reached
+          if (temperature === 40) clearInterval(interval);
+
+          //Update slider value
+          slider.value = temperature;
+
+          //Display temperature and emoji
+          displayTemp(temperature);
+
+          //Increase temperature
+          temperature++;
+
+      }, 95);
+  }
+});
+
+
+
+
+
 
 
