@@ -43,14 +43,14 @@
     .chartCard {
         width: 100vw;
         height: calc(100vh - 40px);
-        background: rgba(54, 162, 235, 0.2);
+        {{!-- background: rgba(54, 162, 235, 0.2); --}}
         display: flex;
         align-items: center;
         justify-content: center;
         margin-left: 4%;
     }
     .chartBox {
-        width: 60%; 
+        width: 100%; 
         padding: 20px;
         border-radius: 20px;
         border: solid 3px rgba(54, 162, 235, 1);
@@ -106,7 +106,7 @@
 
 .chartCard 
 {
-     margin-left: -8%;
+     {{!-- margin-left: -8%; --}}
     width: 100%; /* Adjust width to fit the smaller screen */
 }
 
@@ -218,18 +218,23 @@
             <div class="skills__container container grid">
 
                 <div class="skills__content skill">
+                    <div></div>
                     <div class="temp skil">
-                        <div class="temp__logo">Temperature</div>
-                        <div class="temp__comet"></div>
+                        <div class="temp__logo" >Temperature</div>
+                        <div class="temp__label" ></div>
+                        {{!-- <div class="temp__comet" style="font-size: large;">0</div> --}}
                         <canvas class="temp__fizz"></canvas>
-                        <div class="temp__label">0</div>
                         <div class="temp__value"></div>
-                        <div class="temp__dial"></div>
+                        <div class="temp__dial"><span id="tempc"></span>C</div>
                     </div>
+                
                 </div>
-                <div class="skills__content skill">
-                    <div class="skil">
-                        
+                <div class="skills__content skill"class="addSkills">
+                    <div class="acon">
+                        <img id="ac1" src="" alt="">
+                    </div>
+                    <div id="time">
+                       
                     </div>
                 </div>
             <!-- statue -->

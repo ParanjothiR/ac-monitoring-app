@@ -1638,14 +1638,15 @@ h1 {
  z-index: 2;
 }
 .temp__logo {
- font-family: "Baloo Paaji 2", sans-serif;
- color: #abafba;
+ /* font-family: "Baloo Paaji 2", sans-serif; */
+ color: #c9c9ca;
+ font-family:  Georgia;
  letter-spacing: -0.1em;
  margin-bottom: 3.75em;
- text-transform: lowercase;
+ /* text-transform: lowercase; */
  transform: scaleY(1.1);
 }
-.temp__comet {
+/* /* .temp__comet {
  background:
  radial-gradient(
  100% 100% at 50% 50%,
@@ -1653,13 +1654,13 @@ h1 {
  hsl(var(--hue),90%,20%) 3.25em,
  hsl(var(--hue),90%,17%) 3.3em 3.35em,
  hsla(var(--hue),90%,17%,0) 3.4em
- ),
- conic-gradient(#fff0,#fff calc(1deg * var(--angle)),#fff0 calc(1deg * var(--angle)));
+ ), */
+ /* conic-gradient(#fff0,#fff calc(1deg * var(--angle)),#fff0 calc(1deg * var(--angle)));
  top: calc(50% - 3.5em);
  left: calc(50% - 3.5em);
  width: 5em;
  height: 5em;
-}
+} */ */
 .temp__fizz {
  display: block;
  top: calc(50% - 3.3em);
@@ -1685,6 +1686,47 @@ h1 {
 .temp__dial {
  cursor: grab;
  z-index: 3;
+ margin-top: 70px;
+ font-size: 25px;
+ font-weight: 700;
+ color: #faf8f8;
+}
+#tempc{
+    font-size: 32px;
+    font-weight: 700;
+    color: #faf8f8;
+}
+.acon{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
+#ac1{
+    height: 100px;
+    width: auto;
+}
+.addSkills{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#time{
+    /* display: flex;
+    justify-content: center;
+    align-items: center;*/
+    margin-top: 30px; 
+    /* margin-right: -40px; */
+    padding: 10px;
+/* 
+    background-color: #1c637a;
+    border-radius: 30px; */
+
+    width: 300px;
+    font-size: 25px;
+    font-weight: 500;
+    color: #fff;
 }
 .temp__dial:active {
  cursor: grabbing;
@@ -1696,6 +1738,10 @@ h1 {
  }
 }
 
+.level > span{
+    color: #7e7e7e;
+    font-size: 30px;
+}
 
 
 /* Media query for screen sizes equal to or greater than 1024px (e.g., desktops) */

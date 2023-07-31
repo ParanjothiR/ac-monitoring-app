@@ -262,11 +262,16 @@ fetch('/view?deviceId=' + encodedDeviceId, {
     levelElement.textContent =Math.floor(waterlevel)+"%"
     
 
-    const tempValueElement = document.querySelector('.temp__label');
-    tempValueElement.textContent = data.singledata.temperature + "deg cel";
-
+    const tempValueElement = document.querySelector('#tempc');
+    tempValueElement.textContent = data.singledata.temperature + '°';
+    const  acstatusval=data.singledata.acState;
     const chartContainer = document.getElementById('chartContainer-acState');
-    chartContainer.textContent ="Current State: " + data.singledata.acState;
+    chartContainer.textContent ="Current State: " + acstatusval;
+
+    document.getElementById('ac1').setAttribute('src', acstatusval==='AC ON' ? 'AC_ON.png' : 'AC_OFF.png');
+    document.getElementById('time').innerHTML=data.singledata.timestamp
+
+
     const dataArray=data.multipledata;
     createTemperatureChart(dataArray);
 })
