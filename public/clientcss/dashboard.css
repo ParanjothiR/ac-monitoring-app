@@ -538,10 +538,10 @@ a {
 }
 
 .details-content {
-    opacity: 0;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #21a2df91;
+    /* opacity: 0; */
+    margin: 2px;
+    padding: 25px;
+    background-color: #fbfeff91;
     border: 1px solid #ddd;
     border-radius: 4px;
     width: 280px;
@@ -553,18 +553,14 @@ a {
     width: 200px;
 }
   
-  .details-content.active {
-    opacity: 1;
-  }
+
   
 
 
 
 
 @media (max-width: 768px) {
-    * {
-        cursor: none;
-    }
+
 
     .details {
         grid-template-columns: repeat(1, 1fr);

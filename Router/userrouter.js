@@ -253,7 +253,25 @@ router.get('/view',async(req,res)=>{
 
        
     }catch(err){
+        res.render('error');
+    }
+})
 
+router.get('/dbview',async(req,res)=>{
+    console.log("hello")
+    const { deviceId } = req.query;
+    console.log(deviceId)
+    const {accesstoken}=req.cookies
+    try{
+    const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
+    const email1=verify.email
+    console.log(email1)
+    const singlerecord=await sensordb.findOne({deviceid:deviceId}).sort({ timestamp: -1 })
+    console.log(singlerecord)
+     res.send(singlerecord)
+       
+    }catch(err){
+        res.render('error');
     }
 })
 

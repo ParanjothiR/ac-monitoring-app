@@ -24,22 +24,93 @@ let userToggler = document.querySelector('.user');
 userToggler.onclick = function () {
     toggleMenu.classList.toggle('active');
 }
-// document.addEventListener('click', function (event) {
-//     // Check if the clicked element or any of its ancestors are the accountMenu or userToggler
-//     let isInsideAccountMenu = toggleMenu.contains(event.target) || event.target === userToggler;
-
-//     if (!isInsideAccountMenu) {
-//         // If the click is outside the accountMenu, remove the 'active' class to hide the menu
-//         toggleMenu.classList.remove('active');
-//     }
-// });
 
 
 
-function detailsView()
+
+function detailsView(deviceId)
 {
-    const detailscontent = document.querySelector('.details-content');
-    detailscontent.classList.toggle('active')
+   
+    const encodedDeviceId = encodeURIComponent(deviceId);
+    console.log(encodedDeviceId)
+        fetch('/dbview?deviceId=' + encodedDeviceId, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => {
+          
+            if (!response.ok) {
+                
+                throw new Error('Error fetching device data');
+                // Parse the JSON response
+            } else {
+            
+                return response.json();
+            }
+        })
+        .then((data) => {
+            if (data.singlerecord === null) {
+               
+               window.location.href = '/error'; // Redirect to the error page when data is null
+            } else{
+              ///  const detailscontent = document.querySelector('.details-content');
+               
+                document.querySelector('.userid').textContent =data.deviceid;
+                const air=data.Airquality;
+                const temp=data.temperature;
+                const water=data.waterLevelPercentage;
+                const floatValue1 = parseFloat(air);
+                const floatValue2 = parseFloat(temp);
+                const floatValue3 = parseFloat(water);
+                var airquality;
+                var tempquality;
+                var waterquality;
+                if(floatValue1<50.0){
+                      airquality="Fresh Air"
+                }else if(floatValue1<200.0){
+                    airquality="Normal Indoor Air"
+                }else if(floatValue1<400.0){
+                    airquality="Low Pollution"
+                }else if(floatValue1<600.0){
+                    airquality="Moderate Pollution"
+                }else if(floatValue1<1000.0){
+                    airquality="High Pollution"
+                }else{
+                    airquality="very High Pollution"
+                }
+   
+               
+                if(floatValue2>35.0){
+                    tempquality="Very bad"
+                }else if(floatValue2>27.0){
+                    tempquality="Bad"
+                }else if(floatValue2>25.0 ){
+                   tempquality="Normal"
+                }else if(floatValue2>17){
+                    tempquality="Good"
+                }
+
+                if(floatValue3<10.0){
+                    waterquality="No water Leakage"
+                }else if(floatValue3<40.0){
+                    waterquality="water Leakage"
+                }
+
+
+                document.querySelector('.air-quality').textContent ="Air Quality: "+airquality;
+                document.querySelector('.water-condition').textContent ="Air conditioner Condition:"+tempquality;
+                document.querySelector('.temperature-status').textContent ="Water Leakage :"+waterquality;
+             
+
+                // detailscontent.classList.toggle('active')
+            } 
+        })
+        .catch((error) => {
+         
+           window.location.href = '/error'; // Redirect to the error page for other errors
+        });
 }
 
 
