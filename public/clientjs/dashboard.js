@@ -36,6 +36,13 @@ userToggler.onclick = function () {
 
 
 
+function detailsView()
+{
+    const detailscontent = document.querySelector('.details-content');
+    detailscontent.classList.toggle('active')
+}
+
+
 // Function to toggle the display of the form and overlay
 function toggleForm(formId) {
     const formElement = document.getElementById(formId);
@@ -101,7 +108,40 @@ function deleteDevice(deviceId){
       });
 }
 
-function showDevice(deviceId) { 
-  const encodedDeviceId = encodeURIComponent(deviceId);
-    window.location.href = `/graphs?id=${encodedDeviceId}`
-}
+
+
+function showDevice(deviceId) {
+        const encodedDeviceId = encodeURIComponent(deviceId);
+        fetch('/view?deviceId=' + encodedDeviceId, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json(); // Parse the JSON response
+            } else {
+                throw new Error('Error fetching device data');
+            }
+        })
+        .then((data) => {
+            if (data.singledata === null && data.multipledata.length === 0) {
+                console.error('Data for the device is null.');
+                window.location.href = '/error'; // Redirect to the error page when data is null
+            } else {
+                window.location.href = `/graphs?id=${encodedDeviceId}`; // Redirect to the graphs page with the deviceId
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching device data:', error);
+            window.location.href = '/error'; // Redirect to the error page for other errors
+        });
+    }
+    
+
+   
+  
+
+
+

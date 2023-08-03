@@ -4,7 +4,8 @@ require('dotenv').config();
 
 const nodemailer = require('nodemailer');
 const db = require("../Model/sensorvalue")
-const dbstore1 = require("../Model/uservalues")
+//const dbstore = require("../Model/uservalues")
+const devicelist = require("../Model/deviceslist")
 let timecalc = 0;
 let messagetime = 0;
 let watertime1 = 0;
@@ -15,21 +16,19 @@ async function validatesensordata(data) {
             let water = parseFloat(data.waterLevelPercentage)
             console.log(water)
             if (watertime1 == 0) {
-                if (water >= 40.0 && water <= 50.0) {
+                if (water >40.0) {
                     watertime1 = 1
                     //console.log("water")
                     emailContent = "your air conditioner tray water level is increase you servicing in your air conditioner"
-                    const userdb = await dbstore1.findOne({deviceid:data.deviceid})
-                    const userEmail = userdb.email
-                    message(userEmail, emailContent)
-                }else if(water > 50.0){
-                    watertime1 = 1
-                    emailContent = "your air conditioner tray water level is increase you are suddenly checking and servicing in your air conditioner"
-                    const userdb = await dbstore1.findOne({deviceid:data.deviceid})
-                    const userEmail = userdb.email
-                    //console.log(userEmail)
-                    message(userEmail, emailContent)
+                    const query={"devicesarray":data.deviceid}
+                    const projection = { "email": 1, "_id": 0 };
+                    const result = await devicelist.find(query, projection);
+                
+                    if (result && result.length > 0) {
+                    const firstEmail = result[0].email;
+                     message( firstEmail, emailContent)
                 }
+            }
 
             }
             timecalc += 1;
@@ -64,10 +63,15 @@ async function validatesensordata(data) {
                 if(count==5){
     
                         emailContent = `your air conditioner ON ${acnumber} sensor But your air conditioner is not giving the cooling  ${temperature1}`
-                        const userdb = await dbstore1.findOne({deviceid:data.deviceid})
-                        const userEmail = userdb.email
-                        console.log(userEmail)
-                        message(userEmail, emailContent)
+                        const query={"devicesarray":data.deviceid}
+                        const projection = { "email": 1, "_id": 0 };
+                        const result = await devicelist.find(query, projection);
+                        // const result = await cursor.toArray();
+                
+                        if (result && result.length > 0) {
+                            const firstEmail = result[0].email;
+                             message( firstEmail, emailContent)
+                        }
                 }
 
             }

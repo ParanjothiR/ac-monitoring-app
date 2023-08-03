@@ -9,9 +9,13 @@ router.use(express.json())
 
 
 router.post('/',async (req, res) => {
-    const { temperature, waterLevelPercentage, acState, acno, deviceid } = req.body;
+    console.log(req.body)
+    const { temperature, waterLevelPercentage, acState, acno,Airquality,deviceid } = req.body;
     const timestamp = new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'});
+    let air=Airquality;
+    air=air.replace(/\n/g,'');
         // console.log(req.body);
+        console.log(air)
         try {
             const newSensorData = new dbstore({
                 temperature,
@@ -19,6 +23,7 @@ router.post('/',async (req, res) => {
                 acState,
                 acno,
                 deviceid,
+                Airquality:air,
                 timestamp
             });
            //const data=newSensorData

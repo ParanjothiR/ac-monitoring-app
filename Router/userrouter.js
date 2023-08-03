@@ -123,6 +123,10 @@ router.get('/dashboard',async(req,res)=>{
     }
 })
 
+router.get('/error', (req, res) => {
+    res.render('error'); // Render the 'error.hbs' template
+  });
+
 
 
 router.post('/delete',async(req,res)=>{

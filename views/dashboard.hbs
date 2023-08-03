@@ -213,19 +213,39 @@
             <!-- Cards -->
 
         
-        <ul class="cards">
+        <div class="cards">
             <!-- Add Device button card -->
-            <li class="cards_item cardBox">
+            <div class="cards_item cardBox">
                 <div class="card">
                     <div class="card_content cardDetails">
                         <h2 class="card_title">Add Device</h2>
                         <button class="btn card_btn" id="sj" onclick="toggleForm('form1')">Add</button>
                     </div>
                 </div>
-            </li>
-            <!-- Existing device cards -->
-        </ul>
+                 {{!-- <div class="form__container1">
+            <div class="details-content">
+                <p class="air-quality">Air Quality: Good</p>
+                <p class="water-condition">Water Condition: Clean</p>
+                <p class="temperature-status">Temperature Status: Normal</p>
+            </div>
+          </div> --}}
+               <div class="form__container">
+            <div class="details-content">
+                <p class="air-quality">Air Quality: Good</p>
+                <p class="water-condition">Water Condition: Clean</p>
+                <p class="temperature-status">Temperature Status: Normal</p>
+            </div>
+          </div>
+            </div>
 
+            <!-- Existing device cards -->
+        </div>
+
+       
+        
+<!-- !!!!! code  -->
+
+         
         <!-- Device grid container -->
         <div class="device-grid" id="deviceGrid">
         {{#each devices}}
@@ -233,6 +253,7 @@
         <h3>Device - {{this}}</h3>
         <button onclick="deleteDevice('{{this}}')" class="delete-button">Delete</button>
         <button onclick="showDevice('{{this}}')" class="show-button">Show</button>
+        <button onclick="detailsView('{{this}}')" class="details-button">details</button>
         </div>
        {{/each}}
         </div>

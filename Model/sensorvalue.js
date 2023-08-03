@@ -21,6 +21,10 @@ const Schemadata= new mongoose.Schema({
         required:true,
         type:String
     },
+    Airquality:{
+       required:true,
+       type:String
+    },
     timestamp:{
         required:true,
         type:String
