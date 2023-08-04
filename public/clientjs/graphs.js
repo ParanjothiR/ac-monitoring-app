@@ -271,7 +271,16 @@ fetch('/view?deviceId=' + encodedDeviceId, {
     document.getElementById('ac1').setAttribute('src', acstatusval==='AC ON' ? 'AC_ON.png' : 'AC_OFF.png');
     document.getElementById('time').innerHTML=data.singledata.timestamp
     
-    document.getElementById('airvalue').innerHTML=data.singledata.Airquality +"ppm"
+    
+    let floatValue1=parseFloat(data.singledata.Airquality)
+    if(floatValue1<200.0){
+      airquality=floatValue1+'ppm '+'(Good 🟢)'
+  }else if(floatValue1<600.0){
+      airquality=floatValue1+'ppm '+'(Average 🟡)'
+  }else{
+      airquality=floatValue1+'ppm '+'(Not Good 🔴)'
+  }
+  document.getElementById('airvalue').innerHTML=airquality
     const dataArray=data.multipledata;
     createTemperatureChart(dataArray);
 

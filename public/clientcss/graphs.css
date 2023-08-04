@@ -251,6 +251,7 @@ body.light-theme {
  padding: 1rem 2.25rem;
  backdrop-filter: blur(10px);
  transition: 0.4s;
+ display: none;
 }
 
 .nav__list {
