@@ -11,6 +11,10 @@ let messagetime = 0;
 let watertime1 = 0;
 let emailContent = ""
 async function validatesensordata(data) {
+        
+
+        
+
     try {
         if (data.acState === 'AC ON') {
             let water = parseFloat(data.waterLevelPercentage)

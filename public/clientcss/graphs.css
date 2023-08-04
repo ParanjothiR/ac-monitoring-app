@@ -1767,18 +1767,28 @@ h1 {
 
 
 
+.air_content{
+   
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    height: 260px;
+}
+.f{
+    display:flex;
+    justify-content: space-around;
+    align-items:center;
 
-
-
-
-
-
-
-
-
-
-
-
+}
+.head{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.head h2{
+    
+    color:#a395e9;
+}
 
 
 

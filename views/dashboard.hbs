@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{!-- <link rel="shortcut icon" href="img/logo/apple-brands.svg" type="image/x-icon"> --}}
-    {{!-- <link rel="stylesheet" href="css/all.css" type="text/css"> --}}
-    {{!-- <link rel="stylesheet" href="css/normalize.css" type="text/css"> --}}
+    {{!--
+    <link rel="shortcut icon" href="img/logo/apple-brands.svg" type="image/x-icon"> --}}
+    {{!--
+    <link rel="stylesheet" href="css/all.css" type="text/css"> --}}
+    {{!--
+    <link rel="stylesheet" href="css/normalize.css" type="text/css"> --}}
     <link rel="stylesheet" href="clientcss/dashboard.css" type="text/css">
     <title>Dashboard Template</title>
 
@@ -42,9 +45,12 @@
 
         /* Style for the form input */
         .form-container input[type="text"] {
-            padding: 15px; /* Increase padding */
-            width: 100%; /* Take full width */
-            border: 2px solid #ccc; /* Add border */
+            padding: 15px;
+            /* Increase padding */
+            width: 100%;
+            /* Take full width */
+            border: 2px solid #ccc;
+            /* Add border */
             border-radius: 5px;
             font-size: 16px;
             grid-column: 1 / -1;
@@ -55,19 +61,22 @@
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: transparent; /* Set background to transparent */
-            color: #007bff; /* Text color */
+            background-color: transparent;
+            /* Set background to transparent */
+            color: #007bff;
+            /* Text color */
             font-size: 16px;
             cursor: pointer;
             transition: color 0.2s ease-in-out;
             grid-column: 1 / -1;
-            border: 2px solid #007bff; /* Add border to create a button-like appearance */
+            border: 2px solid #007bff;
+            /* Add border to create a button-like appearance */
         }
 
         /* Change the color of the button text on hover */
         .form-container input[type="submit"]:hover {
             color: #0056b3;
-            
+
         }
 
         /* Style for the close button */
@@ -91,18 +100,22 @@
         /* Style for each device box */
         .device-box {
             background-color: #f1f1f1;
-            padding: 20px;
+            padding: 10px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             text-align: center;
             font-size: 18px;
             color: #333;
+            margin-left: 7px;
+            margin-bottom: 7px;
         }
-        .card_btn{
+
+        .card_btn {
             border: none;
-            width:200px;
+            width: 200px;
             height: 50px;
             background-color: white;
+            cursor: pointer;
         }
 
         .delete-button {
@@ -132,17 +145,19 @@
             background-color: #007bff;
             color: #fff;
         }
-        .sk{
+
+        .sk {
             background-color: #4093eb;
             border-radius: 10px;
             padding: 10px;
             border: none;
             color: white;
+            cursor: pointer;
         }
-
     </style>
 
 </head>
+
 <body>
 
     <div class="container">
@@ -165,7 +180,7 @@
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-               
+
                 <li>
                     <a href="logout">
                         <span class="icon">
@@ -182,7 +197,7 @@
                 <div class="toggle">
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
-                
+
                 <!-- User Account -->
                 <div class="user">
                     <img src="ac1.jpg" alt="user">
@@ -192,17 +207,17 @@
                     <ul>
                         {{#each data}}
                         <li>
-                            
+
                             <h3>{{this.email}}</h3>
                         </li>
-                       {{/each}}
+                        {{/each}}
                         {{#each data}}
                         <li>
                             <h3>ph.no:</h3>
                             <h3>{{this.phoneno}}</h3>
                         </li>
-                       {{/each}}
-                       
+                        {{/each}}
+
                         <li>
                             <img src="ac1.jpg" alt="profile">
                             <a href="logout">Log Out</a>
@@ -212,73 +227,72 @@
             </div>
             <!-- Cards -->
 
-        
-        <div class="cards">
-            <!-- Add Device button card -->
-            <div class="cards_item cardBox">
-                <div class="card">
-                    <div class="card_content cardDetails">
-                        <h2 class="card_title">Add Device</h2>
-                        <button class="btn card_btn" id="sj" onclick="toggleForm('form1')">Add</button>
+
+            <div class="cards">
+                <!-- Add Device button card -->
+                <div class="cards_item cardBox">
+                    <div class="card">
+                        <div class="card_content cardDetails">
+                            <h2 class="card_title">Add Device</h2>
+                            <button class="btn card_btn" id="sj" onclick="toggleForm('form1')">Add</button>
+                        </div>
                     </div>
+                    {{!-- <div class="form__container1">
+                        <div class="details-content">
+                            <p class="air-quality">Air Quality: Good</p>
+                            <p class="water-condition">Water Condition: Clean</p>
+                            <p class="temperature-status">Temperature Status: Normal</p>
+                        </div>
+                    </div> --}}
+                    <div id="display_result" class="form__container" hidden>
+                        <div class="details-content">
+                            <p class="userid" style="text-align:center; font-weight:1000; font-size:20px; color:#333;"></p><br>
+                            <p class="air-quality"></p>
+                            <p class="water-condition"></p>
+                            <p class="temperature-status"></p>
+                        </div>
+                    </div>
+
+                    <!-- Existing device cards -->
                 </div>
-                 {{!-- <div class="form__container1">
-            <div class="details-content">
-                <p class="air-quality">Air Quality: Good</p>
-                <p class="water-condition">Water Condition: Clean</p>
-                <p class="temperature-status">Temperature Status: Normal</p>
-            </div>
-          </div> --}}
-               <div class="form__container">
-            <div class="details-content">
-                <p class="userid">id</p>
-                <p class="air-quality">id</p>
-                <p class="water-condition"></p>
-                <p class="temperature-status"></p>
-            </div>
-          </div>
-            </div>
 
-            <!-- Existing device cards -->
-        </div>
 
-       
-        
-<!-- !!!!! code  -->
 
-         
-        <!-- Device grid container -->
-        <div class="device-grid" id="deviceGrid">
-        {{#each devices}}
-        <div class="device-box" data-device-id="{{this}}">
-        <h3>Device - {{this}}</h3>
-        <button onclick="deleteDevice('{{this}}')" class="delete-button">Delete</button>
-        <button onclick="showDevice('{{this}}')" class="show-button">Show</button>
-        <button onclick="detailsView('{{this}}')" class="details-button">details</button>
-        </div>
-       {{/each}}
-        </div>
+                <!-- !!!!! code  -->
 
-            
+
+                <!-- Device grid container -->
+                <div class="device-grid" id="deviceGrid">
+                    {{#each devices}}
+                    <div class="device-box" data-device-id="{{this}}">
+                        <h3>Device - {{this}}</h3><br>
+                        <button onclick="deleteDevice('{{this}}')" class="delete-button">Delete</button>
+                        <button onclick="showDevice('{{this}}')" class="show-button">Details</button>
+                        <button onclick="detailsView('{{this}}')" class="details-button">Status</button>
+                    </div>
+                    {{/each}}
+                </div>
+
+
                 <!-- Form to be shown when "Add" button is clicked -->
-       <div class="form-container" id="form1">
-            <span class="close-form" onclick="toggleForm('form1')">&times;</span>
-            <form id="addDeviceform" action="addid" method="post" >
-                <label for="deviceid1">Device ID:</label>
-                <input type="text" id="deviceid1" name="deviceid1" required><br>
-    
-                {{!-- <input type="submit" value="Add Device"> --}}
-                <button onclick="addDevice(event)" class="sk">Add Device</button>
-            </form>
-        </div>
-    </div>
-  
-  
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
- 
+                <div class="form-container" id="form1">
+                    <span class="close-form" onclick="toggleForm('form1')">&times;</span>
+                    <form id="addDeviceform" action="addid" method="post">
+                        <label for="deviceid1">Device ID:</label>
+                        <input type="text" id="deviceid1" name="deviceid1" required><br>
 
-    <script src="clientjs/dashboard.js"></script>
+                        {{!-- <input type="submit" value="Add Device"> --}}
+                        <button onclick="addDevice(event)" class="sk">Add Device</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+            <script src="clientjs/dashboard.js"></script>
 </body>
 
 </html>

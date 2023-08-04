@@ -270,10 +270,11 @@ fetch('/view?deviceId=' + encodedDeviceId, {
 
     document.getElementById('ac1').setAttribute('src', acstatusval==='AC ON' ? 'AC_ON.png' : 'AC_OFF.png');
     document.getElementById('time').innerHTML=data.singledata.timestamp
-
-
+    
+    document.getElementById('airvalue').innerHTML=data.singledata.Airquality +"ppm"
     const dataArray=data.multipledata;
     createTemperatureChart(dataArray);
+
 })
 .catch((error) => {
     console.error('Error fetching device data:', error);
@@ -292,6 +293,10 @@ function processData(dataArray) {
     lineColor: item.acState === 'AC ON' ? 'green' : 'red', // Set the line color based on AC status
   }));
 }
+
+
+
+// air quality
 
 
 

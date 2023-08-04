@@ -490,21 +490,6 @@ a {
     height: 80vh;
 }
 
-.back button{
-    padding: 10px 20px;
-    float: right;
-    background-color: #007bff;
-    border-radius:20px;
-    border: none;
-    color:white;
-
-}
-
-
-
-
-
-
 
 /* Responsive Design */
 @media (max-width: 991px) {

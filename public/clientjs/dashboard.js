@@ -57,7 +57,7 @@ function detailsView(deviceId)
             } else{
               ///  const detailscontent = document.querySelector('.details-content');
                
-                document.querySelector('.userid').textContent =data.deviceid;
+                document.querySelector('.userid').textContent ="Device - "+data.deviceid;
                 const air=data.Airquality;
                 const temp=data.temperature;
                 const water=data.waterLevelPercentage;
@@ -67,41 +67,65 @@ function detailsView(deviceId)
                 var airquality;
                 var tempquality;
                 var waterquality;
-                if(floatValue1<50.0){
-                      airquality="Fresh Air"
-                }else if(floatValue1<200.0){
-                    airquality="Normal Indoor Air"
-                }else if(floatValue1<400.0){
-                    airquality="Low Pollution"
+                if(floatValue1<200.0){
+                    airquality="Good "+'('+floatValue1+'ppm)  🟢'
                 }else if(floatValue1<600.0){
-                    airquality="Moderate Pollution"
-                }else if(floatValue1<1000.0){
-                    airquality="High Pollution"
+                    airquality="Average 🟡"+'('+floatValue1+'ppm)'
                 }else{
-                    airquality="very High Pollution"
+                    airquality="Not Good "+'('+floatValue1+'ppm) 🔴'
                 }
-   
-               
-                if(floatValue2>35.0){
-                    tempquality="Very bad"
-                }else if(floatValue2>27.0){
-                    tempquality="Bad"
-                }else if(floatValue2>25.0 ){
-                   tempquality="Normal"
-                }else if(floatValue2>17){
-                    tempquality="Good"
+
+                if(floatValue2>30.0){
+                    tempquality="Not Good "+'('+floatValue2+'°C) 🟢'
+                }else if(floatValue2>25.0){
+                    tempquality="Average "+'('+floatValue2+'°C) 🟡'
+                }else{
+                    tempquality="Good "+'('+floatValue2+'°C) 🔴'
                 }
 
                 if(floatValue3<10.0){
-                    waterquality="No water Leakage"
-                }else if(floatValue3<40.0){
-                    waterquality="water Leakage"
+                    waterquality="No 🟢"
+                }else if(floatValue3<=10.0){
+                    waterquality="Yes 🟡"
                 }
 
 
+                // if(floatValue1<50.0){
+                //       airquality="Fresh Air"
+                // }else if(floatValue1<200.0){
+                //     airquality="Normal Indoor Air"
+                // }else if(floatValue1<400.0){
+                //     airquality="Low Pollution"
+                // }else if(floatValue1<600.0){
+                //     airquality="Moderate Pollution"
+                // }else if(floatValue1<1000.0){
+                //     airquality="High Pollution"
+                // }else{
+                //     airquality="very High Pollution"
+                // }
+   
+               
+                // if(floatValue2>35.0){
+                //     tempquality="Very bad"
+                // }else if(floatValue2>27.0){
+                //     tempquality="Bad"
+                // }else if(floatValue2>25.0 ){
+                //    tempquality="Normal"
+                // }else if(floatValue2>17){
+                //     tempquality="Good"
+                // }
+
+                // if(floatValue3<10.0){
+                //     waterquality="No water Leakage"
+                // }else if(floatValue3<40.0){
+                //     waterquality="water Leakage"
+                // }
+
+                document.getElementById('display_result').removeAttribute('hidden');
+
                 document.querySelector('.air-quality').textContent ="Air Quality: "+airquality;
-                document.querySelector('.water-condition').textContent ="Air conditioner Condition:"+tempquality;
-                document.querySelector('.temperature-status').textContent ="Water Leakage :"+waterquality;
+                document.querySelector('.water-condition').textContent ="Temperature: "+tempquality;
+                document.querySelector('.temperature-status').textContent ="Water Leakage: "+waterquality;
              
 
                 // detailscontent.classList.toggle('active')
