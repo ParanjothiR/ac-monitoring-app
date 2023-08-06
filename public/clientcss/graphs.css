@@ -1136,7 +1136,7 @@ body.light-theme {
  }
 
  .skills__container {
- grid-template-columns: repeat(2, 460px);
+ grid-template-columns: repeat(1, 460px);
  column-gap: 3rem;
  }
 
@@ -1792,9 +1792,15 @@ h1 {
 }
 
 
-
-
-
+#ac1 {
+    margin-left:180px;
+    margin-top: -80px;
+    width: 120px;
+}
+#time{
+    margin-left: -180px;
+    margin-top: 100px;
+}
 
 
 
@@ -1824,6 +1830,18 @@ h1 {
  .temp__value {
  font-size: 32px;
  }
+
+
+ #ac1 {
+    margin-left:180px;
+    margin-top: -150px;
+    width: 120px;
+}
+#time{
+    margin-left: -100px;
+    margin-top: 33px;
+}
+
 }
 
 /* Media query for screen sizes between 768px and 1023px (e.g., tablets) */

@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{!--
-    <link rel="shortcut icon" href="img/logo/apple-brands.svg" type="image/x-icon"> --}}
+
+    <link rel="icon" type="image/x-icon" href="ac-img.png">
     {{!--
     <link rel="stylesheet" href="css/all.css" type="text/css"> --}}
     {{!--
     <link rel="stylesheet" href="css/normalize.css" type="text/css"> --}}
     <link rel="stylesheet" href="clientcss/dashboard.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Dashboard Template</title>
 
     <style>
@@ -76,7 +77,6 @@
         /* Change the color of the button text on hover */
         .form-container input[type="submit"]:hover {
             color: #0056b3;
-
         }
 
         /* Style for the close button */
@@ -90,25 +90,9 @@
         }
 
         /* Style for the device grid container */
-        .device-grid {
-            display: grid;
-            gap: 10px;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            padding: 20px;
-        }
+
 
         /* Style for each device box */
-        .device-box {
-            background-color: #f1f1f1;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            font-size: 18px;
-            color: #333;
-            margin-left: 7px;
-            margin-bottom: 7px;
-        }
 
         .card_btn {
             border: none;
@@ -129,7 +113,7 @@
 
         .delete-button,
         .show-button {
-            padding: 8px 16px;
+            padding: 2px 6px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -142,8 +126,8 @@
         }
 
         .show-button {
-            background-color: #007bff;
-            color: #fff;
+            color: #0e0d0d;
+            background-color: white;
         }
 
         .sk {
@@ -154,11 +138,14 @@
             color: white;
             cursor: pointer;
         }
+
+
     </style>
 
 </head>
 
 <body>
+    
 
     <div class="container">
         <!-- Navigation Section -->
@@ -263,16 +250,9 @@
 
                 <!-- Device grid container -->
                 <div class="device-grid" id="deviceGrid">
-                    {{#each devices}}
-                    <div class="device-box" data-device-id="{{this}}">
-                        <h3>Device - {{this}}</h3><br>
-                        <button onclick="deleteDevice('{{this}}')" class="delete-button">Delete</button>
-                        <button onclick="showDevice('{{this}}')" class="show-button">Details</button>
-                        <button onclick="detailsView('{{this}}')" class="details-button">Status</button>
-                    </div>
-                    {{/each}}
+                 
                 </div>
-
+            
 
                 <!-- Form to be shown when "Add" button is clicked -->
                 <div class="form-container" id="form1">
@@ -280,6 +260,8 @@
                     <form id="addDeviceform" action="addid" method="post">
                         <label for="deviceid1">Device ID:</label>
                         <input type="text" id="deviceid1" name="deviceid1" required><br>
+
+
 
                         {{!-- <input type="submit" value="Add Device"> --}}
                         <button onclick="addDevice(event)" class="sk">Add Device</button>

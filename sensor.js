@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const path=require('path')
 const hbs = require('hbs');
 
+const handlebars = require('handlebars');
 
 
 
@@ -19,6 +20,11 @@ const cons = mongoose.connection;
 cons.on('open', () => {
     console.log("Connected to MongoDB...");
 });
+
+handlebars.registerHelper('isString', function (value) {
+    return typeof value === 'string';
+});
+
 app.set('view engine','hbs')
 app.set('views',path.join(__dirname,'views'))
 app.use(express.static(path.join(__dirname,'public')))

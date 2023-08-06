@@ -2,10 +2,14 @@
 
 * {
     margin: 0;
+    margin-right:5px;
     padding: 0;
     box-sizing: border-box;
     outline: none;
     font-family: 'Ubuntu', sans-serif;
+}
+body{
+    height: 200vh;
 }
 
 :root {
@@ -414,7 +418,7 @@ a {
 .cardBox .card {
     position: relative;
     background: rgb(233, 230, 230);
-    padding: 30px;
+    padding: 50px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     border-radius: 20px;
     -webkit-border-radius: 20px;
@@ -628,3 +632,78 @@ a {
         overflow-x: auto;
     }
 }
+
+
+
+
+
+
+
+
+
+ #deviceGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid with a minimum column width of 250px */
+    gap: 0px; /* Gap between grid items */
+  }
+  
+  #devicebox1 {
+    border: 1px solid #ccc;
+ /* line-height: 30px; */
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-left: 12px;
+    margin-bottom: 12px;
+    height:250px;
+  }
+  
+  /* Adjust styles for the dynamically added content */
+  #devicebox1 h4 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  
+  #deviceid {
+    font-weight: bold;
+    text-align:center;
+  }
+
+
+  /* describtion */
+
+  .ds{
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+
+  #close,
+  #see {
+    cursor: pointer;
+    color: blue;
+  }
+
+
+  .delete-button{
+    float: right;
+  }
+  .show-button{
+    float:right;
+  }
+
+  .show-button i{
+  font-size: 30px;
+  } 
+  
+  /* Media query for small screens */   
+  @media (max-width: 768px) {
+    .device-grid {
+      grid-template-columns: 1fr; /* Single column layout for small screens */
+    }
+  }
+  

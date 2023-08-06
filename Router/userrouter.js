@@ -109,19 +109,39 @@ router.get('/dashboard',async(req,res)=>{
                 //console.log(profile)
             }
         }
-       // console.log(profile)
-        const avilable=await devicedb.find({email:email1})
-        if (avilable.length > 0) {
-            const deviceArray = avilable[0].devicesarray;
-            console.log(deviceArray);
-            return res.render('dashboard', { devices: deviceArray ,data:profile}); 
-        } else {
-            return res.render('dashboard', { devices: [] ,data:profile}); 
-        }
-    }catch(err){
+        return res.render('dashboard', { data:profile});  
+     }catch(err){
         res.render('dashboard',{error:err,data:profile})
     }
 })
+
+
+
+router.get('/root',async(req,res)=>{
+    const {accesstoken}=req.cookies
+  //  console.log(accesstoken)
+    try{
+        const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
+        const email1=verify.email
+        let latestSensorDataArray = [];
+     
+        const available=await devicedb.findOne({email:email1})
+        console.log(available)
+        if (available) {
+            for(let i=0 ; i<available.devicesarray.length ; i++){
+                console.log(available.devicesarray[i])
+                const data=await sensordb.findOne({deviceid:available.devicesarray[i]}).sort({timestamp:-1})
+                console.log(data)
+                latestSensorDataArray.push(data|| available.devicesarray[i]);
+            }
+           // console.log('Latest Sensor Data Array:', latestSensorDataArray.map(obj => obj)); 
+        } 
+        return res.send(latestSensorDataArray)
+     }catch(err){
+        res.send(err)
+    }
+})
+
 
 router.get('/error', (req, res) => {
     res.render('error'); // Render the 'error.hbs' template
@@ -138,10 +158,10 @@ router.post('/delete',async(req,res)=>{
         const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
         const email1=verify.email
       //  console.log(verify.email)
-        const avilable=await devicedb.find({email:email1})
-       // console.log(avilable)
-        if(avilable.length>0){
-            const deviceexixts=avilable[0].devicesarray.includes(deviceId)
+        const available=await devicedb.find({email:email1})
+       // console.log(available)
+        if(available.length>0){
+            const deviceexixts=available[0].devicesarray.includes(deviceId)
          //   console.log(deviceexixts)
            if(deviceexixts){
             await devicedb.updateOne(
@@ -174,18 +194,18 @@ router.post('/addid',async(req,res)=>{
         const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
         const email1=verify.email
      //   console.log(verify.email)
-        const avilable=await devicedb.findOne({email:email1})
-      //  console.log(avilable)
-        if(!avilable){
+        const available=await devicedb.findOne({email:email1})
+      //  console.log(available)
+        if(!available){
             await devicedb.create({
                 email:email1,
                 devicesarray: [deviceid1],
               });
         }else{
-           const deviceexixts=await avilable.devicesarray.includes(deviceid1)
+           const deviceexixts=await available.devicesarray.includes(deviceid1)
            if(!deviceexixts){
-               avilable.devicesarray.push(deviceid1)
-               await avilable.save()
+               available.devicesarray.push(deviceid1)
+               await available.save()
            }
         }
        // console.log("sucess")

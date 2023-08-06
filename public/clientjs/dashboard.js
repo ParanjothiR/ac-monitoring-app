@@ -1,3 +1,4 @@
+
 let list = document.querySelectorAll('.navigation ul li');
 
 function activeLink() {
@@ -28,114 +29,6 @@ userToggler.onclick = function () {
 
 
 
-function detailsView(deviceId)
-{
-   
-    const encodedDeviceId = encodeURIComponent(deviceId);
-    console.log(encodedDeviceId)
-        fetch('/dbview?deviceId=' + encodedDeviceId, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then((response) => {
-          
-            if (!response.ok) {
-                
-                throw new Error('Error fetching device data');
-                // Parse the JSON response
-            } else {
-            
-                return response.json();
-            }
-        })
-        .then((data) => {
-            if (data.singlerecord === null) {
-               
-               window.location.href = '/error'; // Redirect to the error page when data is null
-            } else{
-              ///  const detailscontent = document.querySelector('.details-content');
-               
-                document.querySelector('.userid').textContent ="Device - "+data.deviceid;
-                const air=data.Airquality;
-                const temp=data.temperature;
-                const water=data.waterLevelPercentage;
-                const floatValue1 = parseFloat(air);
-                const floatValue2 = parseFloat(temp);
-                const floatValue3 = parseFloat(water);
-                var airquality;
-                var tempquality;
-                var waterquality;
-                if(floatValue1<200.0){
-                    airquality="Good "+'('+floatValue1+'ppm)  🟢'
-                }else if(floatValue1<600.0){
-                    airquality="Average 🟡"+'('+floatValue1+'ppm)'
-                }else{
-                    airquality="Not Good "+'('+floatValue1+'ppm) 🔴'
-                }
-
-                if(floatValue2>30.0){
-                    tempquality="Not Good "+'('+floatValue2+'°C) 🟢'
-                }else if(floatValue2>25.0){
-                    tempquality="Average "+'('+floatValue2+'°C) 🟡'
-                }else{
-                    tempquality="Good "+'('+floatValue2+'°C) 🔴'
-                }
-
-                if(floatValue3<10.0){
-                    waterquality="No 🟢"
-                }else if(floatValue3<=10.0){
-                    waterquality="Yes 🟡"
-                }
-
-
-                // if(floatValue1<50.0){
-                //       airquality="Fresh Air"
-                // }else if(floatValue1<200.0){
-                //     airquality="Normal Indoor Air"
-                // }else if(floatValue1<400.0){
-                //     airquality="Low Pollution"
-                // }else if(floatValue1<600.0){
-                //     airquality="Moderate Pollution"
-                // }else if(floatValue1<1000.0){
-                //     airquality="High Pollution"
-                // }else{
-                //     airquality="very High Pollution"
-                // }
-   
-               
-                // if(floatValue2>35.0){
-                //     tempquality="Very bad"
-                // }else if(floatValue2>27.0){
-                //     tempquality="Bad"
-                // }else if(floatValue2>25.0 ){
-                //    tempquality="Normal"
-                // }else if(floatValue2>17){
-                //     tempquality="Good"
-                // }
-
-                // if(floatValue3<10.0){
-                //     waterquality="No water Leakage"
-                // }else if(floatValue3<40.0){
-                //     waterquality="water Leakage"
-                // }
-
-                document.getElementById('display_result').removeAttribute('hidden');
-
-                document.querySelector('.air-quality').textContent ="Air Quality: "+airquality;
-                document.querySelector('.water-condition').textContent ="Temperature: "+tempquality;
-                document.querySelector('.temperature-status').textContent ="Water Leakage: "+waterquality;
-             
-
-                // detailscontent.classList.toggle('active')
-            } 
-        })
-        .catch((error) => {
-         
-           window.location.href = '/error'; // Redirect to the error page for other errors
-        });
-}
 
 
 // Function to toggle the display of the form and overlay
@@ -233,9 +126,102 @@ function showDevice(deviceId) {
             window.location.href = '/error'; // Redirect to the error page for other errors
         });
     }
-    
+  
 
-   
+    function realtimeStatus(){
+        fetch('/root',{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error fetching device data');
+            }
+        })
+        .then((data) => {
+            if (data===null  && data.length()===0) {
+                document.getElementById("deviceGrid").innerHTML='Data for the device is null.';
+            } else {
+                for(const index in data){
+                    let deviceid,showdata,description;
+                    if(typeof data[index] =='string'){
+                        deviceid="DeviceId - "+data[index];
+                        showdata=deviceid
+                        description="Device id Not yet Avilable"
+                        showdata = `<div id=devicebox1>
+                        <button onclick="deleteDevice('${data[index]}')" class="delete-button">X</button><br>
+                        <h4 id="deviceid">${deviceid}</h4>
+                        <h4 id="air1" class="ds">${description}</h4><br>
+                        </div>
+                        `
+
+                    }else{
+                      //  deviceid=data[index].deviceid;
+                    const airQuality = parseFloat(data[index].Airquality);
+                    const tempQuality = parseFloat(data[index].temperature);
+                    const waterQuality = parseFloat(data[index].waterLevelPercentage);
+                    console.log("val")
+                    let status = "Unknown";
+                    let status2="unknown"
+                    let status3='Unknown'
+                    if (airQuality < 200.0) {
+                        status = "🟢Air Quality "+airQuality+"ppm"+" (Good)";
+                    
+                    } else if (airQuality < 400.0) {
+                        status = "🟡Air Quality "+airQuality+"ppm"+" (Average)";
+                        
+                    }else{
+                        status = "🔴Air Quality "+airQuality+"ppm"+" (Average)";
+                    
+                    }
+                
+                    if(tempQuality>30){
+                        status2 ="🔴Temperature "+tempQuality+"°C (Not Good)";
+                    }else if(tempQuality>25.0){
+                        status2 ="🟡Temperature "+tempQuality+"°C (Average)";
+                    }else{
+                        status2 ="🟢Temperature "+tempQuality+"°C (Good)";
+                    }
+                    
+                     if(waterQuality>10.0){
+                    
+                        status3="🟢NO Water Leakage"
+                    }else{
+                        
+                        status3="🔴Water Leakage"
+                    }
+                    let val=data[index].deviceid;
+                    deviceid="DeviceId - "+data[index].deviceid;
+                     showdata = `
+                     <div id="devicebox1">
+                     <button onclick="deleteDevice('${val}')" class="delete-button">X</button><br>
+                    <h4 id="deviceid">${deviceid}</h4><br><br>
+                    <h4 id="airvalue1">${status}</h4><br>
+                    <h4 id="tempvalue">${status2}</h4><br>
+                    <h4 id="watervalue">${status3}</h4><br>
+                    <button onclick="showDevice('${val}')" class="show-button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                    </div>
+                    `
+                    }
+                    document.getElementById("deviceGrid").innerHTML+=showdata;
+           
+            }
+
+                 
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
+    realtimeStatus()
+
+
   
 
 
