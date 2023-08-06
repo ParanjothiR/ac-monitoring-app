@@ -187,7 +187,7 @@ function showDevice(deviceId) {
                         status2 ="🟢Temperature "+tempQuality+"°C (Good)";
                     }
                     
-                     if(waterQuality>10.0){
+                     if(waterQuality<10.0){
                     
                         status3="🟢NO Water Leakage"
                     }else{
