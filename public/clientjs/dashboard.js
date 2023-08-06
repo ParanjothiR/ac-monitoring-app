@@ -189,7 +189,7 @@ function showDevice(deviceId) {
                     
                      if(waterQuality<10.0){
                     
-                        status3="🟢NO Water Leakage"
+                        status3="🟢No Water Leakage"
                     }else{
                         
                         status3="🔴Water Leakage"
