@@ -2,7 +2,7 @@
 
 * {
     margin: 0;
-    margin-right:5px;
+    margin-right:0px;
     padding: 0;
     box-sizing: border-box;
     outline: none;
@@ -642,9 +642,11 @@ a {
 
 
  #deviceGrid {
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid with a minimum column width of 250px */
-    gap: 0px; /* Gap between grid items */
+    /* gap: 0px; Gap between grid items */
+    display:flex;
+    margin:10px;
   }
   
   #devicebox1 {
@@ -656,6 +658,7 @@ a {
     margin-left: 12px;
     margin-bottom: 12px;
     height:250px;
+    width: max-content;
   }
   
   /* Adjust styles for the dynamically added content */
@@ -674,7 +677,7 @@ a {
   /* describtion */
 
   .ds{
-    height: 200px;
+    height: 168px;
     display: flex;
     justify-content: center;
     align-items: center;

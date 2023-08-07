@@ -153,12 +153,14 @@ function showDevice(deviceId) {
                         showdata=deviceid
                         description="Device id Not yet Avilable"
                         showdata = `<div id=devicebox1>
-                        <button onclick="deleteDevice('${data[index]}')" class="delete-button">X</button><br>
+                        <button onclick="deleteDevice('${data[index]}')" class="delete-button"><svg width='20px' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                      </svg>
+                      </button><br>
                         <h4 id="deviceid">${deviceid}</h4>
                         <h4 id="air1" class="ds">${description}</h4><br>
                         </div>
                         `
-
                     }else{
                       //  deviceid=data[index].deviceid;
                     const airQuality = parseFloat(data[index].Airquality);
@@ -170,7 +172,6 @@ function showDevice(deviceId) {
                     let status3='Unknown'
                     if (airQuality < 200.0) {
                         status = "🟢Air Quality "+airQuality+"ppm"+" (Good)";
-                    
                     } else if (airQuality < 400.0) {
                         status = "🟡Air Quality "+airQuality+"ppm"+" (Average)";
                         
@@ -198,12 +199,14 @@ function showDevice(deviceId) {
                     deviceid="DeviceId - "+data[index].deviceid;
                      showdata = `
                      <div id="devicebox1">
-                     <button onclick="deleteDevice('${val}')" class="delete-button">X</button><br>
+                     <button onclick="deleteDevice('${val}')" class="delete-button"><svg width='20px' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                   </svg></button><br>
                     <h4 id="deviceid">${deviceid}</h4><br><br>
                     <h4 id="airvalue1">${status}</h4><br>
                     <h4 id="tempvalue">${status2}</h4><br>
                     <h4 id="watervalue">${status3}</h4><br>
-                    <button onclick="showDevice('${val}')" class="show-button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                    <button onclick="showDevice('${val}')" class="show-button"><i class="fa fa-eye" aria-hidden="true"></i>Live</button>
                     </div>
                     `
                     }
