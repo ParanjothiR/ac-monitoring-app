@@ -705,8 +705,11 @@ a {
   
   /* Media query for small screens */   
   @media (max-width: 768px) {
-    .device-grid {
-      grid-template-columns: 1fr; /* Single column layout for small screens */
+    #deviceGrid {
+        flex-direction: column; /* Change to vertical layout for phone view */
+    }
+    #devicebox1 {
+        width: 95%; /* Adjust width to fill the screen in phone view */
     }
   }
   
