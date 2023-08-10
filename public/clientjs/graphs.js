@@ -294,6 +294,55 @@ fetch('/view?deviceId=' + encodedDeviceId, {
 
 graphrender()
 
+    function createTemperatureChart(dataArray) {
+  let dps = processData(dataArray);
+  console.log(dps)
+  console.log("hi")
+  let chart = new CanvasJS.Chart("chartContainer", {
+    title: {
+      text: "Temperature Chart",
+    },
+    data: [{
+      label: 'Temperature',
+      type: 'line',
+      dataPoints: dps,
+      showInLegend: false,
+      legendText: 'Temperature',
+      markerSize: 0,
+      lineThickness: 3,
+      markerBorderColor: 'white',
+      markerBorderThickness: 2,
+      markerType: 'none',
+      lineTension: 5,
+      backgroundColor: 'transparent',
+    }],
+    axisY: {
+      title: 'Temperature (°C)',
+      minimum: 14,
+      maximum: 38,
+       gridColor: "transparent"
+
+    },
+    axisX: {
+      title: 'Time',
+      type: 'time',
+      time: {
+       time: {
+       format: 'HH:mm', // Format for displaying time on the X-axis
+       interval: 1, // Interval in minutes between tick marks
+       unit: 'minute', // Specify 'minute' for the interval
+       displayFormat: 'HH:mm', // Format for displaying time on tooltip
+    },
+    backgroundColor: "transparent"
+    }
+    }
+  });
+  
+  chart.render();
+     }
+setInterval(graphrender,60000)
+
+
 function processData(dataArray) {
   console.log("data")
   return dataArray.map(item => ({
