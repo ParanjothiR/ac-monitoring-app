@@ -647,6 +647,7 @@ a {
     /* gap: 0px; Gap between grid items */
     display:flex;
     margin:10px;
+    flex-wrap: wrap;
   }
   
   #devicebox1 {
