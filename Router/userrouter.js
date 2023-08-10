@@ -268,7 +268,7 @@ router.get('/view',async(req,res)=>{
         singledata:singlerecord,
         multipledata:sensordatas
     }
-   // console.log(sesensordatas)
+   console.log(twosensordatas)
         res.send(twosensordatas)
 
        

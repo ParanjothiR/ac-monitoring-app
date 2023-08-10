@@ -27,7 +27,6 @@ async function validatesensordata(data) {
                     const query={"devicesarray":data.deviceid}
                     const projection = { "email": 1, "_id": 0 };
                     const result = await devicelist.find(query, projection);
-                
                     if (result && result.length > 0) {
                     const firstEmail = result[0].email;
                      message( firstEmail, emailContent)
