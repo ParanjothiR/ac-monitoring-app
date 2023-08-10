@@ -258,9 +258,9 @@ router.get('/view',async(req,res)=>{
     const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN)
     const email1=verify.email
     console.log(email1)
-    const sensordatas=await sensordb.find({deviceid:deviceId}).sort({timestamp:-1}).limit(5)
+    const sensordatas=await sensordb.find({deviceid:deviceId}).sort({_id:-1}).limit(5)
     //console.log(sensordatas)
-    const singlerecord=await sensordb.findOne({deviceid:deviceId}).sort({ timestamp: -1 })
+    const singlerecord=await sensordb.findOne({deviceid:deviceId}).sort({ _id: -1 })
     console.log(singlerecord)
     sensordatas.reverse()
     console.log(sensordatas)
